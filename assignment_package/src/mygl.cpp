@@ -113,6 +113,13 @@ void MyGL::paintGL()
     // prog_flat.draw(*this, yourNonPointerGeometry);
 }
 
+QImage MyGL::makeImage()
+{
+    QImage result(512, 512, QImage::Format_RGB32);
+    result.fill(qRgb(0.f, 255.f, 255.f));
+    return result;
+}
+
 void MyGL::keyPressEvent(QKeyEvent *e)
 {
     // http://doc.qt.io/qt-5/qt.html#Key-enum

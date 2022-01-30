@@ -1,0 +1,13 @@
+debug/main.o
+debug/mainwindow.o
+debug/mygl.o
+debug/shaderprogram.o
+debug/la.o
+debug/drawable.o
+debug/grid.o
+debug/polygon.o
+debug/openglcontext.o
+debug/qrc_glsl.o
+debug/moc_mainwindow.o
+debug/moc_mygl.o
+debug/moc_openglcontext.o

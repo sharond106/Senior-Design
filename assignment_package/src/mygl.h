@@ -5,6 +5,7 @@
 #include <scene/grid.h>
 #include <scene/polygon.h>
 #include <QTreeWidgetItem>
+#include <QImage>
 
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
@@ -35,6 +36,7 @@ public:
     void initializeGL();
     void resizeGL(int w, int h);
     void paintGL();
+    QImage makeImage();
 
 protected:
     void keyPressEvent(QKeyEvent *e);
