@@ -37,16 +37,6 @@
      </rect>
     </property>
    </widget>
-   <widget class="MyGL" name="mygl">
-    <property name="geometry">
-     <rect>
-      <x>840</x>
-      <y>40</y>
-      <width>61</width>
-      <height>200</height>
-     </rect>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -54,7 +44,7 @@
      <x>0</x>
      <y>0</y>
      <width>921</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -75,13 +65,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>MyGL</class>
-   <extends>QOpenGLWidget</extends>
-   <header>mygl.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

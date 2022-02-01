@@ -18,7 +18,6 @@
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
-#include "mygl.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -29,7 +28,6 @@ public:
     QWidget *centralWidget;
     QPushButton *geomSetButton;
     QGraphicsView *scene_display;
-    MyGL *mygl;
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -48,13 +46,10 @@ public:
         scene_display = new QGraphicsView(centralWidget);
         scene_display->setObjectName(QString::fromUtf8("scene_display"));
         scene_display->setGeometry(QRect(60, 40, 771, 491));
-        mygl = new MyGL(centralWidget);
-        mygl->setObjectName(QString::fromUtf8("mygl"));
-        mygl->setGeometry(QRect(840, 40, 61, 200));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 921, 21));
+        menuBar->setGeometry(QRect(0, 0, 921, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);

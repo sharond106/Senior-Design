@@ -8,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    rendered_image = ui->mygl->makeImage();
-    DisplayQImage(rendered_image);
+    connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
+    timer.start(1000);
 }
 
 void MainWindow::DisplayQImage(QImage &i)
@@ -30,3 +30,8 @@ void MainWindow::on_actionQuit_triggered()
     QApplication::exit();
 }
 
+void MainWindow::tick() {
+    QImage result(512, 512, QImage::Format_RGB32);
+    result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
+    DisplayQImage(result);
+}
