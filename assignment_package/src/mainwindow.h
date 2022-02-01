@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QImage>
 #include "mygl.h"
+#include <QFileDialog>
 
 
 namespace Ui {
@@ -30,6 +31,14 @@ private slots:
     void on_actionQuit_triggered();
     void tick();
 
+    void on_openButton_pressed();
+
+    void on_saveButton_pressed();
+
 private:
     Ui::MainWindow *ui;
+
+    QPixmap image;
+    QImage  *imageObject;
+    QGraphicsScene *scene;
 };
