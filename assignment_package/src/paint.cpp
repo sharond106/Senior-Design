@@ -54,3 +54,31 @@ uPtr<QImage> Paint::sobelFilter(QImage* image) {
     }
     return filteredImage;
 }
+
+QImage Paint::GaussianBlur(QImage image) {
+
+    int height = image.height();
+    int width = image.width();
+    QImage result(width, height, QImage::Format_RGB32);
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            glm::vec3 sum = glm::vec3(0.);
+            int counter = 0;
+            for (int i = -5; i <= 5; i++) {
+                for (int j = -5; j <= 5; j++) {
+                    if (x + i >= width || x + i < 0 || y + j >= height || y + j < 0) {
+                        continue;
+                    } else {
+                        QColor color = image.pixelColor(x + i, y + j);
+                        glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
+                        float scaler = kernel[(j + 5) * 11 + (i + 5)];
+                        sum += colorVec * scaler;
+                        counter++;
+                    }
+                }
+            }
+            result.setPixelColor(x, y, QColor(sum[0], sum[1], sum[2]));
+        }
+    }
+    return image;
+}
