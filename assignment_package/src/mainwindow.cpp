@@ -17,7 +17,7 @@ void MainWindow::DisplayQImage(QImage &i)
     QPixmap pixmap(QPixmap::fromImage(i));
     graphics_scene.addPixmap(pixmap);
     graphics_scene.setSceneRect(pixmap.rect());
-//ui->scene_display->setScene(&graphics_scene);
+    ui->scene_display->setScene(&graphics_scene);
 }
 
 MainWindow::~MainWindow()
@@ -31,9 +31,16 @@ void MainWindow::on_actionQuit_triggered()
 }
 
 void MainWindow::tick() {
-    QImage result(512, 512, QImage::Format_RGB32);
-    result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
-    DisplayQImage(result);
+    graphics_scene.clear();
+    graphics_scene.update();
+    if (imageObject != nullptr) {
+        DisplayQImage(*imageObject);
+    } else {
+        QImage result(512, 512, QImage::Format_RGB32);
+        result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
+        DisplayQImage(result);
+    }
+    graphics_scene.update();
 }
 
 void MainWindow::on_openButton_pressed()
@@ -48,13 +55,7 @@ void MainWindow::on_openButton_pressed()
     imageObject = new QImage();
     imageObject->load(imagePath);
 
-    image = QPixmap::fromImage(*imageObject);
-
-    scene = new QGraphicsScene(this);
-    scene->addPixmap(image);
-    scene->setSceneRect(image.rect());
-    ui->scene_display->setScene(scene);
-
+    DisplayQImage(*imageObject);
 }
 
 void MainWindow::on_saveButton_pressed()
