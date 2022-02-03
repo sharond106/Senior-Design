@@ -2,18 +2,12 @@
 #define PAINT_H
 
 #include <QImage>
-#include <QTimer>
 
-class Paint : public QObject
+class Paint
 {
-    Q_OBJECT
-private:
-    QTimer timer;
-    QImage rendered_image;
 public:
     Paint();
-    QImage makeImage();
-    void DisplayQImage(QImage &i);
+    QImage sobelFilter(QImage image);
 };
 
 #endif // PAINT_H

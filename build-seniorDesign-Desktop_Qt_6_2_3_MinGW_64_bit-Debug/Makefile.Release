@@ -416,6 +416,15 @@ release/moc_mainwindow.cpp: ../assignment_package/src/mainwindow.h \
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/QOpenGLVertexArrayObject \
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/qopenglvertexarrayobject.h \
 		../assignment_package/src/scene/node.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
 		release/moc_predefs.h \
 		C:/Qt/6.2.3/mingw_64/bin/moc.exe
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/sharo/OneDrive/Desktop/Senior-Design/build-seniorDesign-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/release/moc_predefs.h -IC:/Qt/6.2.3/mingw_64/mkspecs/win32-g++ -IC:/Users/sharo/OneDrive/Desktop/Senior-Design/assignment_package -IC:/Users/sharo/OneDrive/Desktop/Senior-Design/assignment_package/include -IC:/Users/sharo/OneDrive/Desktop/Senior-Design/assignment_package/src -IC:/Qt/6.2.3/mingw_64/include -IC:/Qt/6.2.3/mingw_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/mingw_64/include/QtWidgets -IC:/Qt/6.2.3/mingw_64/include/QtOpenGL -IC:/Qt/6.2.3/mingw_64/include/QtGui -IC:/Qt/6.2.3/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw900_64/x86_64-w64-mingw32/include ..\assignment_package\src\mainwindow.h -o release\moc_mainwindow.cpp
@@ -737,6 +746,15 @@ release/main.o: ../assignment_package/src/main.cpp ../assignment_package/src/mai
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/QOpenGLVertexArrayObject \
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/qopenglvertexarrayobject.h \
 		../assignment_package/src/scene/node.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
 		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
@@ -1053,6 +1071,15 @@ release/mainwindow.o: ../assignment_package/src/mainwindow.cpp ../assignment_pac
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/QOpenGLVertexArrayObject \
 		C:/Qt/6.2.3/mingw_64/include/QtOpenGL/qopenglvertexarrayobject.h \
 		../assignment_package/src/scene/node.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QFileDialog \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qfiledialog.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdir.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfile.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfiledevice.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qfileinfo.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.2.3/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qdialog.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\assignment_package\src\mainwindow.cpp
 

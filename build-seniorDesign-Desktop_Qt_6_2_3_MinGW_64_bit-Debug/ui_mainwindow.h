@@ -26,7 +26,6 @@ class Ui_MainWindow
 public:
     QAction *actionQuit;
     QWidget *centralWidget;
-    QPushButton *geomSetButton;
     QGraphicsView *scene_display;
     QPushButton *openButton;
     QPushButton *saveButton;
@@ -42,9 +41,6 @@ public:
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        geomSetButton = new QPushButton(centralWidget);
-        geomSetButton->setObjectName(QString::fromUtf8("geomSetButton"));
-        geomSetButton->setGeometry(QRect(800, 580, 111, 21));
         scene_display = new QGraphicsView(centralWidget);
         scene_display->setObjectName(QString::fromUtf8("scene_display"));
         scene_display->setGeometry(QRect(60, 40, 771, 491));
@@ -77,7 +73,6 @@ public:
 #if QT_CONFIG(shortcut)
         actionQuit->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Q", nullptr));
 #endif // QT_CONFIG(shortcut)
-        geomSetButton->setText(QCoreApplication::translate("MainWindow", "Set Geometry", nullptr));
         openButton->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         saveButton->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));

@@ -17,7 +17,7 @@ void MainWindow::DisplayQImage(QImage &i)
     QPixmap pixmap(QPixmap::fromImage(i));
     graphics_scene.addPixmap(pixmap);
     graphics_scene.setSceneRect(pixmap.rect());
-//ui->scene_display->setScene(&graphics_scene);
+    ui->scene_display->setScene(&graphics_scene);
 }
 
 MainWindow::~MainWindow()
