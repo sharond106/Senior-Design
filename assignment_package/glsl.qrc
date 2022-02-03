@@ -2,5 +2,7 @@
     <qresource prefix="/">
         <file>glsl/flat.frag.glsl</file>
         <file>glsl/flat.vert.glsl</file>
+	<file>images/Nature1.jpg</file>
+	<file>images/Mario.jpg</file>
     </qresource>
 </RCC>

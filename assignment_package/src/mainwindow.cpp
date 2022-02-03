@@ -4,9 +4,13 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), paint()
 {
     ui->setupUi(this);
+
+    imageObject = mkU<QImage>();
+    imageObject->load(QString(":images/Mario.jpg"));
+    imageObject = paint.sobelFilter(imageObject.get());
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer.start(1000);
@@ -52,7 +56,6 @@ void MainWindow::on_openButton_pressed()
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
 
-    imageObject = new QImage();
     imageObject->load(imagePath);
 
     DisplayQImage(*imageObject);

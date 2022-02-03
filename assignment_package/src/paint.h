@@ -2,12 +2,13 @@
 #define PAINT_H
 
 #include <QImage>
+#include "smartpointerhelp.h"
 
 class Paint
 {
 public:
     Paint();
-    QImage sobelFilter(QImage image);
+    uPtr<QImage> sobelFilter(QImage* image);
 };
 
 #endif // PAINT_H

@@ -6,7 +6,8 @@
 #include <QImage>
 #include "mygl.h"
 #include <QFileDialog>
-
+#include "smartpointerhelp.h"
+#include "paint.h"
 
 namespace Ui {
 class MainWindow;
@@ -39,6 +40,7 @@ private:
     Ui::MainWindow *ui;
 
     QPixmap image;
-    QImage  *imageObject;
+    uPtr<QImage> imageObject;
     QGraphicsScene *scene;
+    Paint paint;
 };
