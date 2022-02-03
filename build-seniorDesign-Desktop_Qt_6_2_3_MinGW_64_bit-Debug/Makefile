@@ -187,6 +187,7 @@ Makefile: ../assignment_package/seniorDesign.pro C:/Qt/6.2.3/mingw_64/mkspecs/wi
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/qt_config.prf \
 		C:/Qt/6.2.3/mingw_64/mkspecs/win32-g++/qmake.conf \
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/exclusive_builds.prf \
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/toolchain.prf \
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/default_pre.prf \
@@ -217,7 +218,6 @@ Makefile: ../assignment_package/seniorDesign.pro C:/Qt/6.2.3/mingw_64/mkspecs/wi
 		C:/Qt/6.2.3/mingw_64/lib/Qt6OpenGL.prl \
 		C:/Qt/6.2.3/mingw_64/lib/Qt6Gui.prl \
 		C:/Qt/6.2.3/mingw_64/lib/Qt6Core.prl \
-		.qmake.stash \
 		C:/Qt/6.2.3/mingw_64/mkspecs/features/build_pass.prf \
 		../assignment_package/glsl.qrc
 	$(QMAKE) -o Makefile ..\assignment_package\seniorDesign.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
@@ -338,6 +338,7 @@ C:/Qt/6.2.3/mingw_64/mkspecs/features/qt_functions.prf:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/qt_config.prf:
 C:/Qt/6.2.3/mingw_64/mkspecs/win32-g++/qmake.conf:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/exclusive_builds.prf:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/toolchain.prf:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/default_pre.prf:
@@ -368,7 +369,6 @@ C:/Qt/6.2.3/mingw_64/lib/Qt6Widgets.prl:
 C:/Qt/6.2.3/mingw_64/lib/Qt6OpenGL.prl:
 C:/Qt/6.2.3/mingw_64/lib/Qt6Gui.prl:
 C:/Qt/6.2.3/mingw_64/lib/Qt6Core.prl:
-.qmake.stash:
 C:/Qt/6.2.3/mingw_64/mkspecs/features/build_pass.prf:
 ../assignment_package/glsl.qrc:
 qmake: FORCE
