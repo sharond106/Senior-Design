@@ -1,0 +1,41 @@
+#ignore build directories
+build-seniorDesign-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/
+
+assignment_package/seniorDesign.pro.user
+
+#ignore user files
+*.user
+
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
