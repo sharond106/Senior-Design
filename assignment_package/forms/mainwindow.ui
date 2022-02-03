@@ -14,19 +14,6 @@
    <string>Scene Graph</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="geomSetButton">
-    <property name="geometry">
-     <rect>
-      <x>800</x>
-      <y>580</y>
-      <width>111</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Set Geometry</string>
-    </property>
-   </widget>
    <widget class="QGraphicsView" name="scene_display">
     <property name="geometry">
      <rect>
