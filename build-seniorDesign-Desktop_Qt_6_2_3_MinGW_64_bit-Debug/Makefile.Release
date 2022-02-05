@@ -113,6 +113,7 @@ compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_glsl.cpp
 release/qrc_glsl.cpp: ../assignment_package/glsl.qrc \
 		C:/Qt/6.2.3/mingw_64/bin/rcc.exe \
+		../assignment_package/images/Grid.jpg \
 		../assignment_package/images/Nature1.jpg \
 		../assignment_package/images/Mario.jpg \
 		../assignment_package/glsl/flat.frag.glsl \
@@ -1420,7 +1421,10 @@ release/paint.o: ../assignment_package/src/paint.cpp ../assignment_package/src/p
 		../assignment_package/include/glm/detail/_vectorize.hpp \
 		../assignment_package/include/glm/detail/func_common.hpp \
 		../assignment_package/include/glm/detail/_fixes.hpp \
-		../assignment_package/include/glm/detail/func_common.inl
+		../assignment_package/include/glm/detail/func_common.inl \
+		../assignment_package/include/glm/trigonometric.hpp \
+		../assignment_package/include/glm/detail/func_trigonometric.hpp \
+		../assignment_package/include/glm/detail/func_trigonometric.inl
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\paint.o ..\assignment_package\src\paint.cpp
 
 release/qrc_glsl.o: release/qrc_glsl.cpp 

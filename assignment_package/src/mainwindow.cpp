@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     imageObject = mkU<QImage>();
     imageObject->load(QString(":images/Mario.jpg"));
+    imageObject = paint.GaussianBlur(imageObject.get());
     imageObject = paint.sobelFilter(imageObject.get());
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));

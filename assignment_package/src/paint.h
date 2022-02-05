@@ -21,7 +21,7 @@ public:
 
     Paint();
     uPtr<QImage> sobelFilter(QImage* image);
-    QImage GaussianBlur(QImage image);
+    uPtr<QImage> GaussianBlur(QImage* image);
 };
 
 #endif // PAINT_H
