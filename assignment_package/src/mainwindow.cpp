@@ -8,13 +8,16 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    imageObject = mkU<QImage>();
-    imageObject->load(QString(":images/Mario.jpg"));
-    imageObject = paint.GaussianBlur(imageObject.get());
-    imageObject = paint.sobelFilter(imageObject.get());
+    uPtr<QImage> ref = mkU<QImage>();
+    ref->load(QString(":images/Grid.jpg"));
+//    imageObject = paint.GaussianBlur(imageObject.get());
+//    imageObject = paint.sobelFilter(imageObject.get());
+
+//    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
+    //paint.paint(ref.get(), imageObject.get(), std::list<int>(100));
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
-    timer.start(1000);
+    timer.start(5000);
 }
 
 void MainWindow::DisplayQImage(QImage &i)
@@ -57,9 +60,14 @@ void MainWindow::on_openButton_pressed()
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
 
-    imageObject->load(imagePath);
+    uPtr<QImage> ref = mkU<QImage>();
+    ref->load(imagePath);
 
-    DisplayQImage(*imageObject);
+    //imageObject->load(imagePath);
+    //DisplayQImage(*imageObject);
+
+    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
+    paint.paint(ref.get(), imageObject.get(), std::list<int>(100));
 }
 
 void MainWindow::on_saveButton_pressed()
