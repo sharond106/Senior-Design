@@ -36,6 +36,10 @@ private slots:
 
     void on_saveButton_pressed();
 
+    void on_testButton_clicked();
+
+    void on_continueButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -43,4 +47,10 @@ private:
     uPtr<QImage> imageObject;
     QGraphicsScene *scene;
     Paint paint;
+
+    //Temp variables
+    std::list<int> l = {50, 25, 5};
+    int counter = 50;
+
+
 };

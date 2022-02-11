@@ -21,9 +21,9 @@ public:
                                 0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
                                 0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849};
 
-    int minStrokeLength = 0;
-    int maxStrokeLength = 5;      // pass these in through constructor eventually
-    float errorThreshold = 100.;
+    int minStrokeLength = 10;
+    int maxStrokeLength = 15;      // pass these in through constructor eventually
+    float errorThreshold = 300.;
 
     Paint();
     // For visual debugging
@@ -32,7 +32,10 @@ public:
     // Returns gradient orientation of sobel filtered image at x, y
     float gradient(int x, int y, QImage* image);
 
-    uPtr<QImage> GaussianBlur(QImage* image);
+    uPtr<QImage> gaussianBlur(QImage* image);
+
+    //Returns true if the coordinates defined by x and y is out of bounds for the image
+    bool outOfBounds(int x, int y, QImage* image);
 
     // Returns RGB [0-255]
     glm::vec3 colorAt(int x, int y, QImage* image);
@@ -43,6 +46,8 @@ public:
     glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
 
     void applyPaint(Stroke* stroke, QImage* canvas);
+
+    void paintLayer(QImage* reference, QImage* canvas, int brushSize);
 
     void paint(QImage* reference, QImage* canvas, std::list<int> brushSizes);
 };
