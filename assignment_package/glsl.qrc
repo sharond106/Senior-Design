@@ -4,5 +4,6 @@
         <file>glsl/flat.vert.glsl</file>
 	<file>images/Nature1.jpg</file>
 	<file>images/Mario.jpg</file>
+	<file>images/Grid.jpg</file>
     </qresource>
 </RCC>

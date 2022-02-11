@@ -3,6 +3,8 @@
 
 #include <QImage>
 #include "smartpointerhelp.h"
+#include "stroke.h"
+#include "glm/vec3.hpp"
 
 class Paint
 {
@@ -19,9 +21,30 @@ public:
                                 0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
                                 0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849};
 
+    int minStrokeLength = 0;
+    int maxStrokeLength = 5;      // pass these in through constructor eventually
+    float errorThreshold = 100.;
+
     Paint();
+    // For visual debugging
     uPtr<QImage> sobelFilter(QImage* image);
-    QImage GaussianBlur(QImage image);
+
+    // Returns gradient orientation of sobel filtered image at x, y
+    float gradient(int x, int y, QImage* image);
+
+    uPtr<QImage> GaussianBlur(QImage* image);
+
+    // Returns RGB [0-255]
+    glm::vec3 colorAt(int x, int y, QImage* image);
+
+    uPtr<Stroke> paintStroke(int x, int y, int radius, QImage* reference, QImage* canvas);
+
+    // Returns x, y of largest error and the error of the area
+    glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
+
+    void applyPaint(Stroke* stroke, QImage* canvas);
+
+    void paint(QImage* reference, QImage* canvas, std::list<int> brushSizes);
 };
 
 #endif // PAINT_H
