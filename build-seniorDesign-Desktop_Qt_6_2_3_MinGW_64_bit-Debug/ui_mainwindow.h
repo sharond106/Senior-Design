@@ -29,6 +29,8 @@ public:
     QGraphicsView *scene_display;
     QPushButton *openButton;
     QPushButton *saveButton;
+    QPushButton *testButton;
+    QPushButton *continueButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -50,6 +52,12 @@ public:
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
         saveButton->setGeometry(QRect(170, 560, 80, 24));
+        testButton = new QPushButton(centralWidget);
+        testButton->setObjectName(QString::fromUtf8("testButton"));
+        testButton->setGeometry(QRect(710, 570, 80, 24));
+        continueButton = new QPushButton(centralWidget);
+        continueButton->setObjectName(QString::fromUtf8("continueButton"));
+        continueButton->setGeometry(QRect(810, 570, 80, 24));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -75,6 +83,8 @@ public:
 #endif // QT_CONFIG(shortcut)
         openButton->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
         saveButton->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        testButton->setText(QCoreApplication::translate("MainWindow", "Test", nullptr));
+        continueButton->setText(QCoreApplication::translate("MainWindow", "Continue", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 
