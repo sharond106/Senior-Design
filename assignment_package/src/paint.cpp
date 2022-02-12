@@ -263,7 +263,7 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
             glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
             if (error[2] > this->errorThreshold) {
                 uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas);
-                std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
+                //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
                 zbuf.push_back(std::move(stroke));
             }
         }

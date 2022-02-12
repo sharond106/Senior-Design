@@ -34,6 +34,8 @@ private slots:
 
     void on_openButton_pressed();
 
+    void on_paintButton_pressed();
+
     void on_saveButton_pressed();
 
     void on_testButton_clicked();
