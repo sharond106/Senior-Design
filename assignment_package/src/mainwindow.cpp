@@ -12,17 +12,9 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), paint(), ref(), imageObject()
+    ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr)
 {
     ui->setupUi(this);
-
-    uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Grid.jpg"));
-//    imageObject = paint.GaussianBlur(imageObject.get());
-//    imageObject = paint.sobelFilter(imageObject.get());
-
-//    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    //paint.paint(ref.get(), imageObject.get(), std::list<int>(100));
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer.start(300);
@@ -51,10 +43,13 @@ void MainWindow::tick() {
     graphics_scene.update();
     if (imageObject != nullptr) {
         DisplayQImage(*imageObject);
-    } else {
-        QImage result(512, 512, QImage::Format_RGB32);
-        result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
-        DisplayQImage(result);
+    } else if (ref != nullptr) {
+        DisplayQImage(*ref);
+    }
+    else {
+//        QImage result(512, 512, QImage::Format_RGB32);
+//        result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
+//        DisplayQImage(result);
     }
     graphics_scene.update();
 }
@@ -68,14 +63,22 @@ void MainWindow::on_openButton_pressed()
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
 
-    uPtr<QImage> ref = mkU<QImage>();
+    ref = mkU<QImage>();
     ref->load(imagePath);
+    imageObject = mkU<QImage>();
+    imageObject->load(imagePath);
+}
 
-    //imageObject->load(imagePath);
-    //DisplayQImage(*imageObject);
-
+void MainWindow::on_paintButton_pressed() {
+    if (ref == nullptr) {
+        ref = mkU<QImage>();
+        ref->load(QString(":images/Nature1.jpg"));
+    }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    paint.paint(ref.get(), imageObject.get(), std::list<int>(100));
+
+    std::list<int> ls = {50, 25, 5};
+    paint.paint(ref.get(), imageObject.get(), ls);
+    std::cout << "DONE" << std::endl;
 }
 
 void MainWindow::on_saveButton_pressed()
@@ -86,8 +89,6 @@ void MainWindow::on_saveButton_pressed()
                 "",
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
-
-    *imageObject = image.toImage();
 
     imageObject->save(imagePath);
 }
@@ -100,10 +101,8 @@ void MainWindow::on_testButton_clicked()
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
     paint.paint(ref.get(), imageObject.get(), ls);
-//    imageObject = paint.sobelFilter(ref.get());
     std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
     std::cout << "DONE" << std::endl;
-
 }
 
 
