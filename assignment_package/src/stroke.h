@@ -11,6 +11,7 @@ public:
     Stroke(int radius, QColor color, std::pair<int, int> start);
     void addPoint(int x, int y);
     float radius;
+    int randomKey;
     QColor color;
     std::list<std::pair<int, int>> points;
 };

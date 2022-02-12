@@ -4,7 +4,7 @@ Stroke::Stroke() : radius(0.), color(), points()
 {}
 
 Stroke::Stroke(int radius, QColor color, std::pair<int, int> start)
-    : radius(radius), color(color), points() {
+    : radius(radius), color(color), randomKey(std::rand()), points() {
     points.push_back(start);
 }
 
