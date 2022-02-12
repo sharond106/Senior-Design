@@ -76,7 +76,7 @@ void MainWindow::on_paintButton_pressed() {
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
 
-    std::list<int> ls = {50, 25, 5};
+    std::list<int> ls = {50, 25, 5, 2};;
     paint.paint(ref.get(), imageObject.get(), ls);
     std::cout << "DONE" << std::endl;
 }
@@ -95,9 +95,9 @@ void MainWindow::on_saveButton_pressed()
 
 void MainWindow::on_testButton_clicked()
 {
-    std::list<int> ls = {50, 25, 5};
+    std::list<int> ls = {50, 25, 5, 2};
     uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/swirly2.jpg"));
+    ref->load(QString(":images/Nature1.jpg"));
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
     paint.paint(ref.get(), imageObject.get(), ls);

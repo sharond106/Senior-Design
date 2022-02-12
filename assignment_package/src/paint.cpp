@@ -9,6 +9,12 @@
 
 bool TESTING = false;
 
+struct byKey {
+    bool operator()(uPtr<Stroke> const &a, uPtr<Stroke> const &b) const {
+        return a.get()->randomKey < b.get()->randomKey;
+    }
+};
+
 Paint::Paint()
 {}
 
@@ -248,6 +254,7 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     // NEED TO SOMEHOW CHANGE GAUSSIAN KERNAL BASED ON RADIUS SIZE
     uPtr<QImage> blurredRef = gaussianBlur(reference);
+    std::vector<uPtr<Stroke>> zbuf;
     float grid = brushSize;
     for (int x = 0; x < reference->width(); x += grid) {
         for (int y = 0; y < reference->height(); y += grid) {
@@ -256,10 +263,18 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
             glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
             if (error[2] > this->errorThreshold) {
                 uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas);
-
-                applyPaint(stroke.get(), canvas);
+                //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
+                zbuf.push_back(std::move(stroke));
             }
         }
+    }
+
+    //Randomly sort strokes
+
+    std::sort(zbuf.begin(), zbuf.end(), byKey());
+
+    for (int i = 0; i < (int)zbuf.size(); i++) {
+        applyPaint(zbuf[i].get(), canvas);
     }
 }
 
