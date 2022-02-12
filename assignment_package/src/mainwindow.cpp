@@ -76,7 +76,7 @@ void MainWindow::on_paintButton_pressed() {
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
 
-    std::list<int> ls = {50, 25, 5};
+    std::list<int> ls = {50, 25, 5, 2};;
     paint.paint(ref.get(), imageObject.get(), ls);
     std::cout << "DONE" << std::endl;
 }
