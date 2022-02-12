@@ -2,10 +2,17 @@
 #include <ui_mainwindow.h>
 #include <iostream>
 
-
+/*
+ * Clean UI and make buttons usable
+ * Fix vertical strokes
+ * Add guassian kernal calculation from radius
+ * Skipped derivative stuff for brush strokes
+ * Randomly sort per layer
+ * Make different brush shapes
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), paint()
+    ui(new Ui::MainWindow), paint(), ref(), imageObject()
 {
     ui->setupUi(this);
 
@@ -89,10 +96,11 @@ void MainWindow::on_testButton_clicked()
 {
     std::list<int> ls = {50, 25, 5};
     uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Nature1.jpg"));
+    ref->load(QString(":images/swirly2.jpg"));
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
     paint.paint(ref.get(), imageObject.get(), ls);
+//    imageObject = paint.sobelFilter(ref.get());
     std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
     std::cout << "DONE" << std::endl;
 
@@ -102,7 +110,7 @@ void MainWindow::on_testButton_clicked()
 void MainWindow::on_continueButton_clicked()
 {
     uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Nature1.jpg"));
+    ref->load(QString(":images/Grid.jpg"));
     if (imageObject == nullptr) {
         imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }

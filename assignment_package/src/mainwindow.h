@@ -44,6 +44,7 @@ private:
     Ui::MainWindow *ui;
 
     QPixmap image;
+    uPtr<QImage> ref;
     uPtr<QImage> imageObject;
     QGraphicsScene *scene;
     Paint paint;

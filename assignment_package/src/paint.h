@@ -30,6 +30,7 @@ public:
     uPtr<QImage> sobelFilter(QImage* image);
 
     // Returns gradient orientation of sobel filtered image at x, y
+    // [-pi, pi]
     float gradient(int x, int y, QImage* image);
 
     uPtr<QImage> gaussianBlur(QImage* image);

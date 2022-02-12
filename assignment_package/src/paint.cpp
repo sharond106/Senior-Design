@@ -12,74 +12,8 @@ bool TESTING = false;
 Paint::Paint()
 {}
 
-//uPtr<QImage> Paint::sobelFilter(QImage* image) {
-//    uPtr<QImage> filteredImage = mkU<QImage>(image->width(), image->height(),  QImage::Format_RGB32);
-//    glm::mat3 horizontal = glm::mat3(0.);
-//    glm::mat3 vertical = glm::mat3(0.);
-
-//    horizontal[0].x = -3.;
-//    horizontal[0].y = -10.;
-//    horizontal[0].z = -3.;
-//    horizontal[2].x = 3.;
-//    horizontal[2].y = 10.;
-//    horizontal[2].z = 3.;
-//    vertical[0].x = 3.;
-//    vertical[0].y = 0.;
-//    vertical[0].z = -3.;
-//    vertical[1].x = 10.;
-//    vertical[1].y = 0.;
-//    vertical[1].z = -10.;
-//    vertical[2].x = 3.;
-//    vertical[2].y = 0.;
-//    vertical[2].z = -3.;
-
-//    int width = image->width();
-//    int height = image->height();
-//    for (int x = 0; x < width; x++) {
-//        for (int y = 0; y < height; y++) {
-//            glm::vec3 hSum = glm::vec3(0.);
-//            glm::vec3 vSum = glm::vec3(0.);
-
-//            for (int i = -1; i <= 1; i++) {
-//                for (int j = -1; j <= 1; j++) {
-//                    if (x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) {
-//                        continue;
-//                    }
-//                    QColor color = image->pixelColor(x + i, y + j);
-//                    float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
-//                    glm::vec3 colorVec = glm::vec3(luminance);
-//                    hSum += horizontal[i + 1][j + 1] * colorVec;
-//                    vSum += vertical[i + 1][j + 1] * colorVec;
-//                }
-//            }
-//            glm::vec3 length = glm::sqrt((hSum * hSum) + (vSum * vSum));
-
-//            float theta = atan2(hSum.x, vSum.x) * (180.0/3.141592653589793238463);
-
-//            // WHAT IS THIS THRESHOLD SUPPOSED TO BE
-//            if (length.x > 50) {
-//                // vertical
-//                if ((theta >= 70. && theta <= 110.) || (theta <= -70. && theta >= -110.)) {
-//                    filteredImage->setPixelColor(x, y, QColor(255, 0, 0));
-//                }
-//                // horizontal
-//                else if ((theta >= 160.) || (theta <= 20. && theta >= -20.)) {
-//                    filteredImage->setPixelColor(x, y, QColor(0, 0, 255));
-//                }
-//                else {
-//                    filteredImage->setPixelColor(x, y, QColor(0, 255, 0));
-//                }
-//            } else {
-//                filteredImage->setPixelColor(x, y, QColor(0.));
-//            }
-
-////            filteredImage->setPixelColor(x, y, QColor(std::min(length.x, 255.f), std::min(length.y, 255.f), std::min(length.z, 255.f)));
-//        }
-//    }
-//    return filteredImage;
-//}
-
-float Paint::gradient(int x, int y, QImage* image) {
+uPtr<QImage> Paint::sobelFilter(QImage* image) {
+    uPtr<QImage> filteredImage = mkU<QImage>(image->width(), image->height(),  QImage::Format_RGB32);
     glm::mat3 horizontal = glm::mat3(0.);
     glm::mat3 vertical = glm::mat3(0.);
 
@@ -101,9 +35,75 @@ float Paint::gradient(int x, int y, QImage* image) {
 
     int width = image->width();
     int height = image->height();
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            glm::vec3 hSum = glm::vec3(0.);
+            glm::vec3 vSum = glm::vec3(0.);
 
-    glm::vec3 hSum = glm::vec3(0.);
-    glm::vec3 vSum = glm::vec3(0.);
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) {
+                        continue;
+                    }
+                    QColor color = image->pixelColor(x + i, y + j);
+                    float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
+                    glm::vec3 colorVec = glm::vec3(luminance);
+                    hSum += horizontal[i + 1][j + 1] * colorVec;
+                    vSum += vertical[i + 1][j + 1] * colorVec;
+                }
+            }
+            glm::vec3 length = glm::sqrt((hSum * hSum) + (vSum * vSum));
+
+            float theta = atan2(hSum.x, vSum.x) * (180.0/3.141592653589793238463);
+
+            // WHAT IS THIS THRESHOLD SUPPOSED TO BE
+            if (length.x > 50) {
+                // vertical
+                if ((theta >= 70. && theta <= 110.) || (theta <= -70. && theta >= -110.)) {
+                    filteredImage->setPixelColor(x, y, QColor(255, 0, 0));
+                }
+                // horizontal
+                else if ((theta >= 160.) || (theta <= 20. && theta >= -20.)) {
+                    filteredImage->setPixelColor(x, y, QColor(0, 0, 255));
+                }
+                else {
+                    filteredImage->setPixelColor(x, y, QColor(0, 255, 0));
+                }
+            } else {
+                filteredImage->setPixelColor(x, y, QColor(0.));
+            }
+
+//            filteredImage->setPixelColor(x, y, QColor(std::min(length.x, 255.f), std::min(length.y, 255.f), std::min(length.z, 255.f)));
+        }
+    }
+    return filteredImage;
+}
+
+float Paint::gradient(int x, int y, QImage* image) {
+    glm::mat3 gy = glm::mat3(0.);
+    glm::mat3 gx = glm::mat3(0.);
+
+    gy[0].x = -3.;
+    gy[0].y = -10.;
+    gy[0].z = -3.;
+    gy[2].x = 3.;
+    gy[2].y = 10.;
+    gy[2].z = 3.;
+    gx[0].x = 3.;
+    gx[0].y = 0.;
+    gx[0].z = -3.;
+    gx[1].x = 10.;
+    gx[1].y = 0.;
+    gx[1].z = -10.;
+    gx[2].x = 3.;
+    gx[2].y = 0.;
+    gx[2].z = -3.;
+
+    int width = image->width();
+    int height = image->height();
+
+    glm::vec3 gySum = glm::vec3(0.);
+    glm::vec3 gxSum = glm::vec3(0.);
 
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
@@ -115,11 +115,11 @@ float Paint::gradient(int x, int y, QImage* image) {
             QColor color = image->pixelColor(pix_x,pix_y);
             float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
             glm::vec3 colorVec = glm::vec3(luminance);
-            hSum += horizontal[i + 1][j + 1] * colorVec;
-            vSum += vertical[i + 1][j + 1] * colorVec;
+            gySum += gy[i + 1][j + 1] * colorVec;
+            gxSum += gx[i + 1][j + 1] * colorVec;
         }
     }
-    float theta = atan2(hSum.x, vSum.x);
+    float theta = atan2(gySum.x, gxSum.x);
     return theta;
 }
 
@@ -194,10 +194,8 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
         } else {
             theta = theta - M_PI / 2.;
         }
-
         float deltaX = radius * cos(theta);
         float deltaY = radius * sin(theta);
-
         int x = prevX + round(deltaX);
         int y = prevY + round(deltaY);
         if (outOfBounds(x, y, reference)) {
