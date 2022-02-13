@@ -41,6 +41,8 @@ public:
     // Returns RGB [0-255]
     glm::vec3 colorAt(int x, int y, QImage* image);
 
+    bool inCircle(int x, int y, int centerX, int centerY, float r);
+
     uPtr<Stroke> paintStroke(int x, int y, int radius, QImage* reference, QImage* canvas);
 
     // Returns x, y of largest error and the error of the area

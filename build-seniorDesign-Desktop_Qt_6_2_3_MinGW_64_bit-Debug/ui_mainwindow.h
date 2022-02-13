@@ -39,33 +39,33 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(921, 640);
+        MainWindow->resize(1174, 640);
         actionQuit = new QAction(MainWindow);
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         scene_display = new QGraphicsView(centralWidget);
         scene_display->setObjectName(QString::fromUtf8("scene_display"));
-        scene_display->setGeometry(QRect(60, 40, 771, 491));
+        scene_display->setGeometry(QRect(60, 40, 771, 541));
         openButton = new QPushButton(centralWidget);
         openButton->setObjectName(QString::fromUtf8("openButton"));
-        openButton->setGeometry(QRect(60, 560, 80, 24));
+        openButton->setGeometry(QRect(860, 40, 111, 24));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
-        saveButton->setGeometry(QRect(250, 560, 80, 24));
+        saveButton->setGeometry(QRect(860, 170, 111, 24));
         testButton = new QPushButton(centralWidget);
         testButton->setObjectName(QString::fromUtf8("testButton"));
-        testButton->setGeometry(QRect(710, 570, 80, 24));
+        testButton->setGeometry(QRect(860, 520, 80, 24));
         continueButton = new QPushButton(centralWidget);
         continueButton->setObjectName(QString::fromUtf8("continueButton"));
-        continueButton->setGeometry(QRect(810, 570, 80, 24));
+        continueButton->setGeometry(QRect(860, 550, 80, 24));
         paintButton = new QPushButton(centralWidget);
         paintButton->setObjectName(QString::fromUtf8("paintButton"));
-        paintButton->setGeometry(QRect(150, 560, 80, 24));
+        paintButton->setGeometry(QRect(860, 70, 111, 24));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 921, 26));
+        menuBar->setGeometry(QRect(0, 0, 1174, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -85,11 +85,11 @@ public:
 #if QT_CONFIG(shortcut)
         actionQuit->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Q", nullptr));
 #endif // QT_CONFIG(shortcut)
-        openButton->setText(QCoreApplication::translate("MainWindow", "Open", nullptr));
-        saveButton->setText(QCoreApplication::translate("MainWindow", "Save", nullptr));
+        openButton->setText(QCoreApplication::translate("MainWindow", "Upload Image", nullptr));
+        saveButton->setText(QCoreApplication::translate("MainWindow", "Save Image", nullptr));
         testButton->setText(QCoreApplication::translate("MainWindow", "Test", nullptr));
         continueButton->setText(QCoreApplication::translate("MainWindow", "Continue", nullptr));
-        paintButton->setText(QCoreApplication::translate("MainWindow", "Paint", nullptr));
+        paintButton->setText(QCoreApplication::translate("MainWindow", "Generate Painting", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

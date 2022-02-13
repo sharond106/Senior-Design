@@ -25,6 +25,7 @@ void MainWindow::DisplayQImage(QImage &i)
     QPixmap pixmap(QPixmap::fromImage(i));
     graphics_scene.addPixmap(pixmap);
     graphics_scene.setSceneRect(pixmap.rect());
+    ui->scene_display->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
     ui->scene_display->setScene(&graphics_scene);
 }
 
@@ -43,8 +44,6 @@ void MainWindow::tick() {
     graphics_scene.update();
     if (imageObject != nullptr) {
         DisplayQImage(*imageObject);
-    } else if (ref != nullptr) {
-        DisplayQImage(*ref);
     }
     else {
 //        QImage result(512, 512, QImage::Format_RGB32);
@@ -115,10 +114,9 @@ void MainWindow::on_continueButton_clicked()
     if (imageObject == nullptr) {
         imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }
-    if (counter > 5) {
+    if (counter > 1) {
         paint.paintLayer(ref.get(), imageObject.get(), counter);
         counter /= 2;
-
     }
 }
 

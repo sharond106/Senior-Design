@@ -229,13 +229,22 @@ glm::vec3 Paint::areaError(int x, int y, int grid, QImage* reference, QImage* ca
     return glm::vec3(maxX, maxY, error);
 }
 
+bool Paint::inCircle(int x, int y, int centerX, int centerY, float r) {
+    x -= centerX;
+    y -= centerY;
+    if (x*x + y*y <= r*r) {
+        return true;
+    }
+    return false;
+}
+
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
     for (std::pair<int, int> point : stroke->points) {
 
         // MAYBE NOT +1?
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
-                if (!outOfBounds(x, y, canvas)) {
+                if (!outOfBounds(x, y, canvas) && inCircle(x, y, point.first, point.second, stroke->radius)) {
                     canvas->setPixelColor(x, y, stroke->color);
                 }
             }
