@@ -109,7 +109,7 @@ void MainWindow::on_testButton_clicked()
 void MainWindow::on_continueButton_clicked()
 {
     uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Grid.jpg"));
+    ref->load(QString(":images/Nature1.jpg"));
     if (imageObject == nullptr) {
         imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }
