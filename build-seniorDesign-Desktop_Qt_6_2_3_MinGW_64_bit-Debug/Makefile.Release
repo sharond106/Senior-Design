@@ -120,7 +120,11 @@ release/qrc_glsl.cpp: ../assignment_package/glsl.qrc \
 		../assignment_package/images/swirly2.jpg \
 		../assignment_package/images/Grid.jpg \
 		../assignment_package/images/swirly.jpg \
+<<<<<<< HEAD
 		../assignment_package/images/bird.jpeg \
+=======
+		../assignment_package/images/Nature2.jpg \
+>>>>>>> 11cbfde64c7e2219bce5e269c4f766acd313c3e2
 		../assignment_package/images/Nature1.jpg \
 		../assignment_package/images/Mario.jpg \
 		../assignment_package/glsl/flat.frag.glsl \
@@ -1104,6 +1108,7 @@ release/mainwindow.o: ../assignment_package/src/mainwindow.cpp ../assignment_pac
 		../assignment_package/src/paint.h \
 		../assignment_package/src/stroke.h \
 		ui_mainwindow.h \
+<<<<<<< HEAD
 		C:/Qt/6.2.3/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/QAction \
 		C:/Qt/6.2.3/mingw_64/include/QtGui/qaction.h \
@@ -1138,6 +1143,42 @@ release/mainwindow.o: ../assignment_package/src/mainwindow.cpp ../assignment_pac
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h
+=======
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVariant \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/QAction \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qaction.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qmutex.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthreadpool.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qrunnable.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QGraphicsView \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgraphicsview.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qscrollarea.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QMenu \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qmenu.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QMenuBar \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qmenubar.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
+		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h
+>>>>>>> 11cbfde64c7e2219bce5e269c4f766acd313c3e2
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\assignment_package\src\mainwindow.cpp
 
 release/la.o: ../assignment_package/src/la.cpp ../assignment_package/src/la.h \
