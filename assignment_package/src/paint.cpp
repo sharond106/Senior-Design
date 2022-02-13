@@ -113,9 +113,6 @@ float Paint::gradient(int x, int y, QImage* image) {
 
     for (int i = -1; i <= 1; i++) {
         for (int j = -1; j <= 1; j++) {
-            if (x + i < 0 || x + i >= width || y + j < 0 || y + j >= height) {
-                continue;
-            }
             int pix_x = std::max(std::min(x + i, width - 1), 0);
             int pix_y = std::max(std::min(y + j, height - 1), 0);
             QColor color = image->pixelColor(pix_x,pix_y);
@@ -139,19 +136,14 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image) {
             int counter = 0;
             for (int i = -5; i <= 5; i++) {
                 for (int j = -5; j <= 5; j++) {
-                    if (x + i >= width || x + i < 0 || y + j >= height || y + j < 0) {
-                        continue;
-                    } else {
-                        //flooring and ceiling color getting to bounds of image
-
-                        int pix_x = std::max(std::min(x + i, width - 1), 0);
-                        int pix_y = std::max(std::min(y + j, height - 1), 0);
-                        QColor color = image->pixelColor(pix_x, pix_y);
-                        glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
-                        float scaler = kernel[(j + 5) * 11 + (i + 5)];
-                        sum += colorVec * scaler;
-                        counter++;
-                    }
+                    //flooring and ceiling color getting to bounds of image
+                    int pix_x = std::max(std::min(x + i, width - 1), 0);
+                    int pix_y = std::max(std::min(y + j, height - 1), 0);
+                    QColor color = image->pixelColor(pix_x, pix_y);
+                    glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
+                    float scaler = kernel[(j + 5) * 11 + (i + 5)];
+                    sum += colorVec * scaler;
+                    counter++;
                 }
             }
             if (!outOfBounds(x, y, image)) {

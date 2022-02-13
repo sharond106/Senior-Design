@@ -12,6 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr)
 {
     ui->setupUi(this);
+//    imageObject = mkU<QImage>();
+//    imageObject->load(QString(":images/apple.jpg"));
+//    imageObject = paint.gaussianBlur(imageObject.get());
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
     timer.start(300);
@@ -105,8 +108,10 @@ void MainWindow::on_testButton_clicked()
 
 void MainWindow::on_continueButton_clicked()
 {
-    uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Nature1.jpg"));
+    if (ref == nullptr) {
+        uPtr<QImage> ref = mkU<QImage>();
+        ref->load(QString(":images/Nature1.jpg"));
+    }
     if (imageObject == nullptr) {
         imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }
