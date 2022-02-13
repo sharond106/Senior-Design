@@ -5,7 +5,8 @@
 /*
  * Add guassian kernal calculation from radius
  * Skipped derivative stuff for brush strokes
- * Make different brush shapes
+ * Make parameters on ui and implement functionality
+ * See if timer can work properly
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

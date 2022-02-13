@@ -183,6 +183,7 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
 
     int prevX = x0;
     int prevY = y0;
+    // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS
     for (int i = 0; i < this->maxStrokeLength; i++) {
         float theta = gradient(prevX, prevY, reference);
 
