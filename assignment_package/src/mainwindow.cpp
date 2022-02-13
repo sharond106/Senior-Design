@@ -3,11 +3,8 @@
 #include <iostream>
 
 /*
- * Clean UI and make buttons usable
- * Fix vertical strokes
  * Add guassian kernal calculation from radius
  * Skipped derivative stuff for brush strokes
- * Randomly sort per layer
  * Make different brush shapes
  */
 MainWindow::MainWindow(QWidget *parent) :
@@ -95,7 +92,7 @@ void MainWindow::on_saveButton_pressed()
 
 void MainWindow::on_testButton_clicked()
 {
-    std::list<int> ls = {50, 25, 5, 2};
+    std::list<int> ls = {50, 25, 5, 3};
     uPtr<QImage> ref = mkU<QImage>();
     ref->load(QString(":images/Nature1.jpg"));
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);

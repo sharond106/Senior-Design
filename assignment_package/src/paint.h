@@ -21,9 +21,9 @@ public:
                                 0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
                                 0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849};
 
-    int minStrokeLength = 3;
-    int maxStrokeLength = 10;      // pass these in through constructor eventually
-    float errorThreshold = 100.;
+    int minStrokeLength = 7;
+    int maxStrokeLength = 12;      // pass these in through constructor eventually
+    float errorThreshold = 200.;
 
     Paint();
     // For visual debugging
