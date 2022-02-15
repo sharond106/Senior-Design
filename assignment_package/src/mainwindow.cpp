@@ -7,6 +7,7 @@
  * Skipped derivative stuff for brush strokes
  * Make parameters on ui and implement functionality
  * See if timer can work properly
+ * support upload pngs
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

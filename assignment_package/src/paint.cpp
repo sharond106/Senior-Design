@@ -86,24 +86,21 @@ uPtr<QImage> Paint::sobelFilter(QImage* image) {
 }
 
 float Paint::gradient(int x, int y, QImage* image) {
-    glm::mat3 gy = glm::mat3(0.);
     glm::mat3 gx = glm::mat3(0.);
+    glm::mat3 gy = glm::mat3(0.);
 
-    gy[0].x = -3.;
-    gy[0].y = -10.;
-    gy[0].z = -3.;
-    gy[2].x = 3.;
-    gy[2].y = 10.;
-    gy[2].z = 3.;
     gx[0].x = 3.;
-    gx[0].y = 0.;
     gx[0].z = -3.;
     gx[1].x = 10.;
-    gx[1].y = 0.;
     gx[1].z = -10.;
     gx[2].x = 3.;
-    gx[2].y = 0.;
     gx[2].z = -3.;
+    gy[0].x = 3.;
+    gy[0].y = 10.;
+    gy[0].z = 3.;
+    gy[2].x = -3.;
+    gy[2].y = -10.;
+    gy[2].z = -3.;
 
     int width = image->width();
     int height = image->height();
@@ -118,11 +115,11 @@ float Paint::gradient(int x, int y, QImage* image) {
             QColor color = image->pixelColor(pix_x,pix_y);
             float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
             glm::vec3 colorVec = glm::vec3(luminance);
-            gySum += gy[i + 1][j + 1] * colorVec;
             gxSum += gx[i + 1][j + 1] * colorVec;
+            gySum += gy[i + 1][j + 1] * colorVec;
         }
     }
-    float theta = atan2(gySum.x, gxSum.x);
+    float theta = atan2(gxSum.x, gySum.x);
     return theta;
 }
 
