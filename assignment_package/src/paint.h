@@ -6,6 +6,8 @@
 #include "stroke.h"
 #include "glm/vec3.hpp"
 
+enum BrushShape { CIRCLE, SQUARE };
+
 class Paint
 {
 public:
@@ -24,6 +26,7 @@ public:
     int minStrokeLength = 7;
     int maxStrokeLength = 12;      // pass these in through constructor eventually
     float errorThreshold = 200.;
+    BrushShape brush = CIRCLE;
 
     Paint();
     // For visual debugging
@@ -42,6 +45,8 @@ public:
     glm::vec3 colorAt(int x, int y, QImage* image);
 
     bool inCircle(int x, int y, int centerX, int centerY, float r);
+
+    bool checkShape(int x, int y, int centerX, int centerY, float r);
 
     uPtr<Stroke> paintStroke(int x, int y, int radius, QImage* reference, QImage* canvas);
 

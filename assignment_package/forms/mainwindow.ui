@@ -50,19 +50,6 @@
      <string>Save Image</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="testButton">
-    <property name="geometry">
-     <rect>
-      <x>860</x>
-      <y>520</y>
-      <width>80</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Test</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="continueButton">
     <property name="geometry">
      <rect>
@@ -134,7 +121,7 @@
      <number>10</number>
     </property>
     <property name="value">
-     <number>3</number>
+     <number>4</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
@@ -454,7 +441,6 @@
    <zorder>scene_display</zorder>
    <zorder>openButton</zorder>
    <zorder>saveButton</zorder>
-   <zorder>testButton</zorder>
    <zorder>continueButton</zorder>
    <zorder>paintButton</zorder>
    <zorder>smallestRadius</zorder>

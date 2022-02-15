@@ -236,13 +236,24 @@ bool Paint::inCircle(int x, int y, int centerX, int centerY, float r) {
     return false;
 }
 
+bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
+    switch(this->brush) {
+    case SQUARE:
+        return true;
+    case CIRCLE:
+        return inCircle(x, y, centerX, centerY, r);
+    default:
+        return true;
+    }
+}
+
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
     for (std::pair<int, int> point : stroke->points) {
 
         // MAYBE NOT +1?
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
-                if (!outOfBounds(x, y, canvas) && inCircle(x, y, point.first, point.second, stroke->radius)) {
+                if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
                     canvas->setPixelColor(x, y, stroke->color);
                 }
             }

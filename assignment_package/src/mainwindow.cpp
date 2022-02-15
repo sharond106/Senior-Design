@@ -55,6 +55,21 @@ void MainWindow::tick() {
     graphics_scene.update();
 }
 
+std::list<int> MainWindow::loadPaintParams() {
+    paint.brush = static_cast<BrushShape>(ui->brushShape->currentIndex());
+
+    // Create list of brush sizes from largest to smallest'
+    int smallestR = ui->smallestRadius->value();
+    int numLayers = ui->numberLayers->value();
+    std::list<int> l = {smallestR};
+    auto it = l.begin();
+    for (int i = 0; i < numLayers - 1; i++) {
+        l.insert(it, l.front() * 2);
+        it = l.begin();
+    }
+    return l;
+}
+
 void MainWindow::on_openButton_pressed()
 {
     QString imagePath = QFileDialog::getOpenFileName(
@@ -77,7 +92,7 @@ void MainWindow::on_paintButton_pressed() {
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
 
-    std::list<int> ls = {50, 25, 5, 2};
+    std::list<int> ls = loadPaintParams();
 //    paint.paint(ref.get(), imageObject.get(), ls);
 
     // this still isn't showing up in layers with the timer
@@ -98,19 +113,6 @@ void MainWindow::on_saveButton_pressed()
 
     imageObject->save(imagePath);
 }
-
-void MainWindow::on_testButton_clicked()
-{
-    std::list<int> ls = {50, 25, 5, 3};
-    ref = mkU<QImage>();
-    ref->load(QString(":images/Nature1.jpg"));
-    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
-    paint.paint(ref.get(), imageObject.get(), ls);
-    std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
-    std::cout << "DONE" << std::endl;
-}
-
 
 void MainWindow::on_continueButton_clicked()
 {

@@ -108,7 +108,7 @@ public:
         numberLayers->setGeometry(QRect(1000, 180, 42, 26));
         numberLayers->setMinimum(1);
         numberLayers->setMaximum(10);
-        numberLayers->setValue(3);
+        numberLayers->setValue(4);
         label_2 = new QLabel(centralWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(870, 180, 121, 21));
