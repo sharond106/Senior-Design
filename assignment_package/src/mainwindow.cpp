@@ -95,14 +95,16 @@ void MainWindow::on_saveButton_pressed()
 
 void MainWindow::on_testButton_clicked()
 {
-    std::list<int> ls = {50, 25, 5, 3};
-    uPtr<QImage> ref = mkU<QImage>();
-    ref->load(QString(":images/Nature1.jpg"));
-    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
-    paint.paint(ref.get(), imageObject.get(), ls);
-    std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
-    std::cout << "DONE" << std::endl;
+    std::vector<float> h = paint.generateKernel(11, 1.f);
+//    std::list<int> ls = {50, 25, 5, 3};
+//    uPtr<QImage> ref = mkU<QImage>();
+//    ref->load(QString(":images/Nature1.jpg"));
+//    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
+//    std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
+//    paint.paint(ref.get(), imageObject.get(), ls);
+//    std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
+//    std::cout << "DONE" << std::endl;
 }
 
 

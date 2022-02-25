@@ -5,6 +5,7 @@
 #include "smartpointerhelp.h"
 #include "stroke.h"
 #include "glm/vec3.hpp"
+#include "math.h"
 
 class Paint
 {
@@ -26,6 +27,12 @@ public:
     float errorThreshold = 200.;
 
     Paint();
+
+    float gaussEquation(float x, float y, float stdev);
+
+    //Generate Kernel based on a size input
+    std::vector<float> generateKernel(int span, float stdev);
+
     // For visual debugging
     uPtr<QImage> sobelFilter(QImage* image);
 

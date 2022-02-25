@@ -18,6 +18,32 @@ struct byKey {
 Paint::Paint()
 {}
 
+float Paint::gaussEquation(float x, float y, float stdev) {
+    float exponent = -(x * x + y * y) / (2 * stdev * stdev);
+    return exp(exponent) / (2 * M_PI * stdev * stdev);
+}
+
+std::vector<float> Paint::generateKernel(int span, float stdev) {
+    std::vector<float> blurnel;
+    int half = span / 2;
+    float sum = 0.f;
+    for (int j = 0; j < span; j++) {
+        for (int i = 0; i < span; i++) {         
+            float x = i - half;
+            float y = j - half;
+            std::cout << x << " " << y << std::endl;
+            float val = gaussEquation(x, y, stdev);
+            blurnel.push_back(val);
+            sum += val;         
+        }
+    }
+
+    for (int i = 0; i < (int)blurnel.size(); i++) {
+        blurnel[i] /= sum;
+    }
+    return blurnel;
+}
+
 uPtr<QImage> Paint::sobelFilter(QImage* image) {
     uPtr<QImage> filteredImage = mkU<QImage>(image->width(), image->height(),  QImage::Format_RGB32);
     glm::mat3 horizontal = glm::mat3(0.);
