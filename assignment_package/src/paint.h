@@ -29,6 +29,7 @@ public:
     BrushShape brush = CIRCLE;
     float opacity = 1.0;
     float curvatureFilter = 1.;
+    uPtr<QImage> brushImage = nullptr;
 
     Paint();
     // For visual debugging

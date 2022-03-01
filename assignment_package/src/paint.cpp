@@ -184,7 +184,13 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
     float prevDeltaY = 0.;
     // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS
     for (int i = 0; i < this->maxStrokeLength; i++) {
-        float theta = gradient(prevX, prevY, reference);
+        float theta = 0.f;
+        if (this->brushImage != nullptr) {
+            theta = gradient(prevX, prevY, this->brushImage.get());
+        } else {
+            theta = gradient(prevX, prevY, reference);
+        }
+
 
         // LOOK HERE FOR BUGS IN FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (theta + M_PI / 2. <= M_PI / 2.) {
@@ -276,6 +282,13 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     // NEED TO SOMEHOW CHANGE GAUSSIAN KERNAL BASED ON RADIUS SIZE
     uPtr<QImage> blurredRef = gaussianBlur(reference);
+
+    // if using separate image for brush stroke direction
+    // DO I NEED TO MAKE THIS A UNIQUE PTR????????????????????????
+    if (this->brushImage != nullptr) {
+        this->brushImage = gaussianBlur(this->brushImage.get());
+    }
+
     std::vector<uPtr<Stroke>> zbuf;
     float grid = brushSize;
     for (int x = 0; x < reference->width(); x += grid) {

@@ -21,6 +21,7 @@ private:
     QTimer timer;
     QImage rendered_image;
     QGraphicsScene graphics_scene;
+    QGraphicsScene graphics_scene_for_stroke;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -38,17 +39,24 @@ private slots:
 
     void on_saveButton_pressed();
 
+    void on_strokeButton_pressed();
+
+    void on_clearStrokeButton_pressed();
+
 private:
     Ui::MainWindow *ui;
 
     QPixmap image;
     uPtr<QImage> ref;
     uPtr<QImage> imageObject;
+    uPtr<QImage> brushImage;
     QGraphicsScene *scene;
     Paint paint;
+    QString brushImagePath;
 
     //Temp variables
     int counter = 50;
 
     std::list<int> loadPaintParams();
+    void resizeBrushImage();
 };

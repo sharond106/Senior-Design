@@ -1105,56 +1105,7 @@ debug/mainwindow.o: ../assignment_package/src/mainwindow.cpp ../assignment_packa
 		../assignment_package/src/smartpointerhelp.h \
 		../assignment_package/src/paint.h \
 		../assignment_package/src/stroke.h \
-		ui_mainwindow.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/QVariant \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/QAction \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qaction.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qmutex.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qthreadpool.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qrunnable.h \
-		C:/Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QCheckBox \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qcheckbox.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QGraphicsView \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qgraphicsview.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qscrollarea.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QGroupBox \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qgroupbox.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
-		C:/Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QMenu \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qmenu.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QMenuBar \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qmenubar.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QRadioButton \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qradiobutton.h \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QSlider \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/QSpinBox \
-		C:/Qt/6.2.3/mingw_64/include/QtWidgets/qspinbox.h
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\assignment_package\src\mainwindow.cpp
 
 debug/la.o: ../assignment_package/src/la.cpp ../assignment_package/src/la.h \
