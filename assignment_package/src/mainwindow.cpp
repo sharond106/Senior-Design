@@ -14,6 +14,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr)
 {
     ui->setupUi(this);
+    ui->scene_display->setWindowTitle(QString("Painting Generator"));
 //    imageObject = mkU<QImage>();
 //    imageObject->load(QString(":images/apple.jpg"));
 //    imageObject = paint.gaussianBlur(imageObject.get());
@@ -58,6 +59,36 @@ void MainWindow::tick() {
 std::list<int> MainWindow::loadPaintParams() {
     paint.brush = static_cast<BrushShape>(ui->brushShape->currentIndex());
 
+    if (ui->errorThresholdCheck->isChecked()) {
+        paint.errorThreshold = ui->errorThreshold->value();
+    } else {
+        paint.errorThreshold = 200.;
+    }
+
+    if (ui->minStrokeLengthCheck->isChecked()) {
+        paint.minStrokeLength = ui->minStrokeLength->value();
+    } else {
+        paint.minStrokeLength = 7.;
+    }
+
+    if (ui->maxStrokeLengthCheck->isChecked()) {
+        paint.maxStrokeLength = ui->maxStrokeLength->value();
+    } else {
+        paint.maxStrokeLength = 12.;
+    }
+
+    if (ui->opacityCheck->isChecked()) {
+        paint.opacity = ui->opacity->value() / 10.;
+    } else {
+        paint.opacity = 1.0;
+    }
+
+    if (ui->curvatureFilterCheck->isChecked()) {
+        paint.curvatureFilter = ui->curvatureFilter->value() / 10.;
+    } else {
+        paint.curvatureFilter = 1.0;
+    }
+
     // Create list of brush sizes from largest to smallest'
     int smallestR = ui->smallestRadius->value();
     int numLayers = ui->numberLayers->value();
@@ -99,7 +130,6 @@ void MainWindow::on_paintButton_pressed() {
     for (int r: ls) {
        paint.paintLayer(ref.get(), imageObject.get(), r);
     }
-    std::cout << "DONE" << std::endl;
 }
 
 void MainWindow::on_saveButton_pressed()
@@ -112,21 +142,5 @@ void MainWindow::on_saveButton_pressed()
                 );
 
     imageObject->save(imagePath);
-}
-
-void MainWindow::on_continueButton_clicked()
-{
-    if (ref == nullptr) {
-        ref = mkU<QImage>();
-        ref->load(QString(":images/Nature1.jpg"));
-        imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    }
-    if (imageObject == nullptr) {
-        imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    }
-    if (counter > 1) {
-        paint.paintLayer(ref.get(), imageObject.get(), counter);
-        counter /= 2;
-    }
 }
 

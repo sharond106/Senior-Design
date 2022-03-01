@@ -180,6 +180,8 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
 
     int prevX = x0;
     int prevY = y0;
+    float prevDeltaX = 0.;
+    float prevDeltaY = 0.;
     // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS
     for (int i = 0; i < this->maxStrokeLength; i++) {
         float theta = gradient(prevX, prevY, reference);
@@ -190,8 +192,14 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
         } else {
             theta = theta - M_PI / 2.;
         }
+
         float deltaX = radius * cos(theta);
         float deltaY = radius * sin(theta);
+
+        // Curvature filter
+        deltaX = (this->curvatureFilter * deltaX) + ((1. - this->curvatureFilter) * prevDeltaX);
+        deltaY = (this->curvatureFilter * deltaY) + ((1. - this->curvatureFilter) * prevDeltaY);
+
         int x = prevX + round(deltaX);
         int y = prevY + round(deltaY);
         if (outOfBounds(x, y, reference)) {
@@ -204,6 +212,8 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
         stroke->addPoint(x, y);
         prevX = x;
         prevY = y;
+        prevDeltaX = deltaX;
+        prevDeltaY = deltaY;
     }
     return stroke;
 }
@@ -254,7 +264,9 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
                 if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
-                    canvas->setPixelColor(x, y, stroke->color);
+                    QColor colorWithOpacity = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue(), this->opacity);
+                    canvas->setPixelColor(x, y, colorWithOpacity);
+//                    canvas->setPixelColor(x, y, stroke->color);
                 }
             }
         }

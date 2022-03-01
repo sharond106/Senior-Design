@@ -27,6 +27,8 @@ public:
     int maxStrokeLength = 12;      // pass these in through constructor eventually
     float errorThreshold = 200.;
     BrushShape brush = CIRCLE;
+    float opacity = 1.0;
+    float curvatureFilter = 1.;
 
     Paint();
     // For visual debugging
