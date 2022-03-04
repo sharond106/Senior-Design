@@ -5,7 +5,9 @@
 /*
  * Add guassian kernal calculation from radius
  * Skipped derivative stuff for brush strokes
- * Make different brush shapes
+ * Make parameters on ui and implement functionality
+ * See if timer can work properly
+ * support upload pngs
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,6 +27,7 @@ void MainWindow::DisplayQImage(QImage &i)
     QPixmap pixmap(QPixmap::fromImage(i));
     graphics_scene.addPixmap(pixmap);
     graphics_scene.setSceneRect(pixmap.rect());
+    ui->scene_display->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
     ui->scene_display->setScene(&graphics_scene);
 }
 
@@ -43,8 +46,6 @@ void MainWindow::tick() {
     graphics_scene.update();
     if (imageObject != nullptr) {
         DisplayQImage(*imageObject);
-    } else if (ref != nullptr) {
-        DisplayQImage(*ref);
     }
     else {
 //        QImage result(512, 512, QImage::Format_RGB32);
@@ -52,6 +53,21 @@ void MainWindow::tick() {
 //        DisplayQImage(result);
     }
     graphics_scene.update();
+}
+
+std::list<int> MainWindow::loadPaintParams() {
+    paint.brush = static_cast<BrushShape>(ui->brushShape->currentIndex());
+
+    // Create list of brush sizes from largest to smallest'
+    int smallestR = ui->smallestRadius->value();
+    int numLayers = ui->numberLayers->value();
+    std::list<int> l = {smallestR};
+    auto it = l.begin();
+    for (int i = 0; i < numLayers - 1; i++) {
+        l.insert(it, l.front() * 2);
+        it = l.begin();
+    }
+    return l;
 }
 
 void MainWindow::on_openButton_pressed()
@@ -76,8 +92,13 @@ void MainWindow::on_paintButton_pressed() {
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
 
-    std::list<int> ls = {50, 25, 5, 2};;
-    paint.paint(ref.get(), imageObject.get(), ls);
+    std::list<int> ls = loadPaintParams();
+//    paint.paint(ref.get(), imageObject.get(), ls);
+
+    // this still isn't showing up in layers with the timer
+    for (int r: ls) {
+       paint.paintLayer(ref.get(), imageObject.get(), r);
+    }
     std::cout << "DONE" << std::endl;
 }
 
@@ -93,34 +114,19 @@ void MainWindow::on_saveButton_pressed()
     imageObject->save(imagePath);
 }
 
-void MainWindow::on_testButton_clicked()
-{
-    std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
-    std::vector<float> h = paint.generateKernel(11, 1.f);
-//    std::list<int> ls = {50, 25, 5, 3};
-//    uPtr<QImage> ref = mkU<QImage>();
-//    ref->load(QString(":images/Nature1.jpg"));
-//    imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-//    std::cout << "BEGIN-------------------------------------------------------------------------------------------" << std::endl;
-//    paint.paint(ref.get(), imageObject.get(), ls);
-//    std::cout << imageObject.get()->width() << " " << imageObject.get()->height() << std::endl;
-//    std::cout << "DONE" << std::endl;
-}
-
-
 void MainWindow::on_continueButton_clicked()
 {
     if (ref == nullptr) {
-        uPtr<QImage> ref = mkU<QImage>();
+        ref = mkU<QImage>();
         ref->load(QString(":images/Nature1.jpg"));
+        imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }
     if (imageObject == nullptr) {
         imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
     }
-    if (counter > 5) {
+    if (counter > 1) {
         paint.paintLayer(ref.get(), imageObject.get(), counter);
         counter /= 2;
-
     }
 }
 
