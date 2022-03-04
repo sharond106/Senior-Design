@@ -36,10 +36,6 @@ public:
     QGraphicsView *scene_display;
     QPushButton *openButton;
     QPushButton *saveButton;
-<<<<<<< HEAD
-    QPushButton *continueButton;
-=======
->>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
     QPushButton *paintButton;
     QSpinBox *smallestRadius;
     QLabel *label;
@@ -103,14 +99,7 @@ public:
         openButton->setGeometry(QRect(860, 40, 141, 31));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
-<<<<<<< HEAD
-        saveButton->setGeometry(QRect(860, 450, 131, 31));
-        continueButton = new QPushButton(centralWidget);
-        continueButton->setObjectName(QString::fromUtf8("continueButton"));
-        continueButton->setGeometry(QRect(860, 550, 80, 24));
-=======
         saveButton->setGeometry(QRect(860, 630, 131, 31));
->>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
         paintButton = new QPushButton(centralWidget);
         paintButton->setObjectName(QString::fromUtf8("paintButton"));
         paintButton->setGeometry(QRect(860, 590, 131, 31));
@@ -310,10 +299,6 @@ public:
         scene_display->raise();
         openButton->raise();
         saveButton->raise();
-<<<<<<< HEAD
-        continueButton->raise();
-=======
->>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
         paintButton->raise();
         smallestRadius->raise();
         label->raise();
@@ -358,10 +343,6 @@ public:
 #endif // QT_CONFIG(shortcut)
         openButton->setText(QCoreApplication::translate("MainWindow", "Upload Source Image", nullptr));
         saveButton->setText(QCoreApplication::translate("MainWindow", "Save Image", nullptr));
-<<<<<<< HEAD
-        continueButton->setText(QCoreApplication::translate("MainWindow", "Continue", nullptr));
-=======
->>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
         paintButton->setText(QCoreApplication::translate("MainWindow", "Generate Painting", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "Smallest brush radius", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Number of layers", nullptr));

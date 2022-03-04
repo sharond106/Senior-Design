@@ -92,7 +92,7 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.curvatureFilter = 1.0;
     }
 
-    if (brushImage->width() > 0) {
+    if (brushImage != nullptr && brushImage->width() > 0) {
         paint.brushImage = mkU<QImage>(*this->brushImage.get());
     } else {
         paint.brushImage = nullptr;

@@ -46,8 +46,10 @@ address_sanitizer {
     QMAKE_LFLAGS += -fsanitize=address
 }
 
-HEADERS +=
+HEADERS += \
 
-SOURCES +=
+
+SOURCES += \
+
 
 DISTFILES +=

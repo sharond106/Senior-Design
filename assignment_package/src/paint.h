@@ -6,6 +6,8 @@
 #include "stroke.h"
 #include "glm/vec3.hpp"
 #include "math.h"
+#include <QThreadPool>
+#include "blurworker.h"
 
 enum BrushShape { CIRCLE, SQUARE };
 
@@ -27,6 +29,8 @@ public:
     int minStrokeLength = 7;
     int maxStrokeLength = 12;      // pass these in through constructor eventually
     float errorThreshold = 200.;
+    bool useThreads = true;
+    int threadCount = 8;
     BrushShape brush = CIRCLE;
     float opacity = 1.0;
     float curvatureFilter = 1.;

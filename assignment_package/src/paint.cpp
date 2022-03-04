@@ -7,6 +7,7 @@
 #include <math.h>
 #include "glm/trigonometric.hpp"
 
+
 bool TESTING = false;
 
 struct byKey {
@@ -159,40 +160,40 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
     int span = kernelLim * 2 + 1;
     std::vector<float> kernel = generateKernel(span, 1.f);
     uPtr<QImage> result = mkU<QImage>(image->width(), image->height(),  QImage::Format_RGB32);
-    for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-            glm::vec3 sum = glm::vec3(0.);
-            int counter = 0;
-            for (int i = -kernelLim; i <= kernelLim; i++) {
-                for (int j = -kernelLim; j <= kernelLim; j++) {
-                    //flooring and ceiling color getting to bounds of image
-                    int pix_x = std::max(std::min(x + i, width - 1), 0);
-                    int pix_y = std::max(std::min(y + j, height - 1), 0);
-                    QColor color = image->pixelColor(pix_x, pix_y);
-                    glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
-                    float scaler = kernel[(j + kernelLim) * span + (i + kernelLim)];
-                    sum += colorVec * scaler;
-                    counter++;
+    if (useThreads) {
+        QMutex mutex;
+        for (int i = 0; i < threadCount; i++) {
+            BlurWorker* w = new BlurWorker(&mutex, i, image, threadCount, kernelLim, span, kernel, result.get());
+            QThreadPool::globalInstance()->start(w);
+        }
+        QThreadPool::globalInstance()->waitForDone();
+    } else {
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                glm::vec3 sum = glm::vec3(0.);
+                int counter = 0;
+                for (int i = -kernelLim; i <= kernelLim; i++) {
+                    for (int j = -kernelLim; j <= kernelLim; j++) {
+                        //flooring and ceiling color getting to bounds of image
+                        int pix_x = std::max(std::min(x + i, width - 1), 0);
+                        int pix_y = std::max(std::min(y + j, height - 1), 0);
+                        QColor color = image->pixelColor(pix_x, pix_y);
+                        glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
+                        float scaler = kernel[(j + kernelLim) * span + (i + kernelLim)];
+                        sum += colorVec * scaler;
+                        counter++;
+                    }
                 }
-            }
-            if (!outOfBounds(x, y, image)) {
-                result->setPixelColor(x, y, QColor(sum[0], sum[1], sum[2]));
-            } else {
-                 std::cout << "BAD " << x << " " << y << std::endl;
-            }
+                if (!BlurWorker::outOfBounds(x, y, image)) {
+                    result->setPixelColor(x, y, QColor(sum[0], sum[1], sum[2]));
+                } else {
+                     std::cout << "BAD " << x << " " << y << std::endl;
+                }
 
+            }
         }
     }
     return result;
-}
-
-bool Paint::outOfBounds(int x, int y, QImage* image) {
-    int width = image->width();
-    int height = image->height();
-    if (x >= width || y >= height || x < 0 || y < 0) {
-        return true;
-    }
-    return false;
 }
 
 glm::vec3 Paint::colorAt(int x, int y, QImage* image) {
@@ -240,7 +241,7 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
 
         int x = prevX + round(deltaX);
         int y = prevY + round(deltaY);
-        if (outOfBounds(x, y, reference)) {
+        if (BlurWorker::outOfBounds(x, y, reference)) {
             return stroke;
         }
         if (i > minStrokeLength && glm::distance(colorAt(x, y, reference), colorAt(x, y, canvas)) <
@@ -301,7 +302,7 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
         // MAYBE NOT +1?
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
-                if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
+                if (!BlurWorker::outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
                     QColor colorWithOpacity = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue(), this->opacity);
                     canvas->setPixelColor(x, y, colorWithOpacity);
 //                    canvas->setPixelColor(x, y, stroke->color);
@@ -313,18 +314,13 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     // NEED TO SOMEHOW CHANGE GAUSSIAN KERNAL BASED ON RADIUS SIZE
-<<<<<<< HEAD
     uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize);
-=======
-    uPtr<QImage> blurredRef = gaussianBlur(reference);
-
     // if using separate image for brush stroke direction
     // DO I NEED TO MAKE THIS A UNIQUE PTR????????????????????????
     if (this->brushImage != nullptr) {
-        this->brushImage = gaussianBlur(this->brushImage.get());
+        this->brushImage = gaussianBlur(this->brushImage.get(), brushSize);
     }
 
->>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
     std::vector<uPtr<Stroke>> zbuf;
     float grid = brushSize;
     for (int x = 0; x < reference->width(); x += grid) {
