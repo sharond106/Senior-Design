@@ -22,8 +22,13 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindow_t {
+<<<<<<< HEAD
     const uint offsetsAndSize[16];
     char stringdata0[134];
+=======
+    const uint offsetsAndSize[18];
+    char stringdata0[161];
+>>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_MainWindow_t, stringdata0) + ofs), len 
@@ -36,13 +41,23 @@ QT_MOC_LITERAL(36, 4), // "tick"
 QT_MOC_LITERAL(41, 21), // "on_openButton_pressed"
 QT_MOC_LITERAL(63, 22), // "on_paintButton_pressed"
 QT_MOC_LITERAL(86, 21), // "on_saveButton_pressed"
+<<<<<<< HEAD
 QT_MOC_LITERAL(108, 25) // "on_continueButton_clicked"
+=======
+QT_MOC_LITERAL(108, 23), // "on_strokeButton_pressed"
+QT_MOC_LITERAL(132, 28) // "on_clearStrokeButton_pressed"
+>>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
 
     },
     "MainWindow\0on_actionQuit_triggered\0\0"
     "tick\0on_openButton_pressed\0"
     "on_paintButton_pressed\0on_saveButton_pressed\0"
+<<<<<<< HEAD
     "on_continueButton_clicked"
+=======
+    "on_strokeButton_pressed\0"
+    "on_clearStrokeButton_pressed"
+>>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
 };
 #undef QT_MOC_LITERAL
 
@@ -89,7 +104,12 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 2: _t->on_openButton_pressed(); break;
         case 3: _t->on_paintButton_pressed(); break;
         case 4: _t->on_saveButton_pressed(); break;
+<<<<<<< HEAD
         case 5: _t->on_continueButton_clicked(); break;
+=======
+        case 5: _t->on_strokeButton_pressed(); break;
+        case 6: _t->on_clearStrokeButton_pressed(); break;
+>>>>>>> d4db4e3e3dd711330274de23e67f0ba07bbc2454
         default: ;
         }
     }

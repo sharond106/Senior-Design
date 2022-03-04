@@ -11,9 +11,10 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr)
+    ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr), brushImage(nullptr)
 {
     ui->setupUi(this);
+    ui->scene_display->setWindowTitle(QString("Painting Generator"));
 //    imageObject = mkU<QImage>();
 //    imageObject->load(QString(":images/apple.jpg"));
 //    imageObject = paint.gaussianBlur(imageObject.get());
@@ -27,8 +28,9 @@ void MainWindow::DisplayQImage(QImage &i)
     QPixmap pixmap(QPixmap::fromImage(i));
     graphics_scene.addPixmap(pixmap);
     graphics_scene.setSceneRect(pixmap.rect());
-    ui->scene_display->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
+
     ui->scene_display->setScene(&graphics_scene);
+    ui->scene_display->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
 }
 
 MainWindow::~MainWindow()
@@ -44,9 +46,11 @@ void MainWindow::on_actionQuit_triggered()
 void MainWindow::tick() {
     graphics_scene.clear();
     graphics_scene.update();
+
     if (imageObject != nullptr) {
         DisplayQImage(*imageObject);
     }
+
     else {
 //        QImage result(512, 512, QImage::Format_RGB32);
 //        result.fill(qRgb(rand() % 100, rand() % 100, rand() % 100));
@@ -57,6 +61,42 @@ void MainWindow::tick() {
 
 std::list<int> MainWindow::loadPaintParams() {
     paint.brush = static_cast<BrushShape>(ui->brushShape->currentIndex());
+
+    if (ui->errorThresholdCheck->isChecked()) {
+        paint.errorThreshold = ui->errorThreshold->value();
+    } else {
+        paint.errorThreshold = 200.;
+    }
+
+    if (ui->minStrokeLengthCheck->isChecked()) {
+        paint.minStrokeLength = ui->minStrokeLength->value();
+    } else {
+        paint.minStrokeLength = 7.;
+    }
+
+    if (ui->maxStrokeLengthCheck->isChecked()) {
+        paint.maxStrokeLength = ui->maxStrokeLength->value();
+    } else {
+        paint.maxStrokeLength = 12.;
+    }
+
+    if (ui->opacityCheck->isChecked()) {
+        paint.opacity = ui->opacity->value() / 10.;
+    } else {
+        paint.opacity = 1.0;
+    }
+
+    if (ui->curvatureFilterCheck->isChecked()) {
+        paint.curvatureFilter = ui->curvatureFilter->value() / 10.;
+    } else {
+        paint.curvatureFilter = 1.0;
+    }
+
+    if (brushImage->width() > 0) {
+        paint.brushImage = mkU<QImage>(*this->brushImage.get());
+    } else {
+        paint.brushImage = nullptr;
+    }
 
     // Create list of brush sizes from largest to smallest'
     int smallestR = ui->smallestRadius->value();
@@ -85,12 +125,55 @@ void MainWindow::on_openButton_pressed()
     imageObject->load(imagePath);
 }
 
+void MainWindow::on_strokeButton_pressed()
+{
+    if (ref == nullptr || ref->width() <= 0) {
+        std::cout << "Upload source image first" << std::endl;
+        return;
+    }
+    brushImagePath = QFileDialog::getOpenFileName(
+                this,
+                tr("Open File"),
+                "",
+                tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
+                );
+
+    resizeBrushImage();
+
+    // display it in the viewer
+    QPixmap pixmap(QPixmap::fromImage(*brushImage));
+    graphics_scene_for_stroke.addPixmap(pixmap);
+    graphics_scene_for_stroke.setSceneRect(pixmap.rect());
+
+    ui->scene_display_2->setScene(&graphics_scene_for_stroke);
+    ui->scene_display_2->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
+}
+
+void MainWindow::resizeBrushImage() {
+    brushImage = mkU<QImage>();
+    brushImage->load((brushImagePath));
+    *brushImage = brushImage->scaled(ref->width(), ref->height(), Qt::KeepAspectRatioByExpanding);
+    *brushImage = brushImage->copy((brushImage->width() / 2.) - (ref->width() / 2.),
+                                   (brushImage->height() / 2.) - (ref->height() / 2.),
+                                   ref->width(), ref->height());
+}
+
+void MainWindow::on_clearStrokeButton_pressed() {
+    brushImage = mkU<QImage>();
+    graphics_scene_for_stroke.clear();
+    ui->scene_display_2->setScene(&graphics_scene_for_stroke);
+}
+
 void MainWindow::on_paintButton_pressed() {
     if (ref == nullptr) {
         ref = mkU<QImage>();
         ref->load(QString(":images/Nature1.jpg"));
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
+
+    if (brushImage != nullptr && brushImage->width() > 0) {
+        resizeBrushImage();
+    }
 
     std::list<int> ls = loadPaintParams();
 //    paint.paint(ref.get(), imageObject.get(), ls);
@@ -99,7 +182,6 @@ void MainWindow::on_paintButton_pressed() {
     for (int r: ls) {
        paint.paintLayer(ref.get(), imageObject.get(), r);
     }
-    std::cout << "DONE" << std::endl;
 }
 
 void MainWindow::on_saveButton_pressed()
@@ -112,21 +194,5 @@ void MainWindow::on_saveButton_pressed()
                 );
 
     imageObject->save(imagePath);
-}
-
-void MainWindow::on_continueButton_clicked()
-{
-    if (ref == nullptr) {
-        ref = mkU<QImage>();
-        ref->load(QString(":images/Nature1.jpg"));
-        imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    }
-    if (imageObject == nullptr) {
-        imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
-    }
-    if (counter > 1) {
-        paint.paintLayer(ref.get(), imageObject.get(), counter);
-        counter /= 2;
-    }
 }
 
