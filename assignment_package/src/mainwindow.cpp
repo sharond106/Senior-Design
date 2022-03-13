@@ -71,20 +71,20 @@ std::list<int> MainWindow::loadPaintParams() {
     if (ui->minStrokeLengthCheck->isChecked()) {
         paint.minStrokeLength = ui->minStrokeLength->value();
     } else {
-        paint.minStrokeLength = 7.;
+        paint.minStrokeLength = 1.;
     }
 
     if (ui->maxStrokeLengthCheck->isChecked()) {
         paint.maxStrokeLength = ui->maxStrokeLength->value();
     } else {
-        paint.maxStrokeLength = 12.;
+        paint.maxStrokeLength = -1.;
     }
 
-    if (ui->opacityCheck->isChecked()) {
-        paint.opacity = ui->opacity->value() / 10.;
-    } else {
-        paint.opacity = 1.0;
-    }
+//    if (ui->opacityCheck->isChecked()) {
+//        paint.opacity = ui->opacity->value() / 10.;
+//    } else {
+//        paint.opacity = 1.0;
+//    }
 
     if (ui->curvatureFilterCheck->isChecked()) {
         paint.curvatureFilter = ui->curvatureFilter->value() / 10.;
@@ -178,7 +178,9 @@ void MainWindow::on_paintButton_pressed() {
     }
 
     std::list<int> ls = loadPaintParams();
-//    paint.paint(ref.get(), imageObject.get(), ls);
+
+    // SOMETIMES PIXEL COLORS ARE NEVER SET IF THERE'S ONLY 1 LAYER
+    imageObject->fill(QColor(0, 255, 0));
 
     // this still isn't showing up in layers with the timer
     for (int r: ls) {

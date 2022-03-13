@@ -26,8 +26,8 @@ public:
 //                                0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
 //                                0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849};
 
-    int minStrokeLength = 7;
-    int maxStrokeLength = 12;      // pass these in through constructor eventually
+    int minStrokeLength = 1;
+    int maxStrokeLength = -1;
     float errorThreshold = 200.;
     bool useThreads = true;
     int threadCount = 8;
@@ -53,7 +53,13 @@ public:
     uPtr<QImage> gaussianBlur(QImage* image, int size);
 
     //Returns true if the coordinates defined by x and y is out of bounds for the image
-    bool outOfBounds(int x, int y, QImage* image);
+    bool outOfBounds(int x, int y, QImage* image);    
+
+    // Caps c to [0, 255]
+    int cap(int c);
+
+    // Returns QColor in range [0, 255]
+    QColor getColor(QImage* image, int x, int y);
 
     // Returns RGB [0-255]
     glm::vec3 colorAt(int x, int y, QImage* image);

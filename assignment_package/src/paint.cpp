@@ -141,7 +141,7 @@ float Paint::gradient(int x, int y, QImage* image) {
         for (int j = -1; j <= 1; j++) {
             int pix_x = std::max(std::min(x + i, width - 1), 0);
             int pix_y = std::max(std::min(y + j, height - 1), 0);
-            QColor color = image->pixelColor(pix_x,pix_y);
+            QColor color = getColor(image, pix_x,pix_y);
             float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
             glm::vec3 colorVec = glm::vec3(luminance);
             gxSum += gx[i + 1][j + 1] * colorVec;
@@ -177,7 +177,7 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
                         //flooring and ceiling color getting to bounds of image
                         int pix_x = std::max(std::min(x + i, width - 1), 0);
                         int pix_y = std::max(std::min(y + j, height - 1), 0);
-                        QColor color = image->pixelColor(pix_x, pix_y);
+                        QColor color = getColor(image, pix_x, pix_y);
                         glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
                         float scaler = kernel[(j + kernelLim) * span + (i + kernelLim)];
                         sum += colorVec * scaler;
@@ -185,7 +185,7 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
                     }
                 }
                 if (!BlurWorker::outOfBounds(x, y, image)) {
-                    result->setPixelColor(x, y, QColor(sum[0], sum[1], sum[2]));
+                    result->setPixelColor(x, y, QColor(cap(sum[0]), cap(sum[1]), cap(sum[2])));
                 } else {
                      std::cout << "BAD " << x << " " << y << std::endl;
                 }
@@ -196,15 +196,27 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
     return result;
 }
 
+int Paint::cap(int c) {
+    return std::max(std::min(c, 255), 0);
+}
+
+QColor Paint::getColor(QImage* image, int x, int y) {
+    QColor color = image->pixelColor(x, y);
+    color.setRed(cap(color.red()));
+    color.setGreen(cap(color.green()));
+    color.setBlue(cap(color.blue()));
+    return color;
+}
+
 glm::vec3 Paint::colorAt(int x, int y, QImage* image) {
     int pix_x = std::max(std::min(x, image->width() - 1), 0);
     int pix_y = std::max(std::min(y, image->height() - 1), 0);
-    QColor color = image->pixelColor(pix_x, pix_y);
+    QColor color = getColor(image, pix_x, pix_y);
     return glm::vec3(color.red(), color.green(), color.blue());
 }
 
 uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas) {
-    QColor col = reference->pixelColor(x0, y0);
+    QColor col = getColor(reference, x0, y0);
 
     if (TESTING) {
         col = QColor(255, 0, 0);
@@ -215,7 +227,11 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
     int prevY = y0;
     float prevDeltaX = 0.;
     float prevDeltaY = 0.;
-    // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS
+
+    // default max length = 4 X radius
+    if (this->maxStrokeLength == -1) {
+        this->maxStrokeLength = 4 * radius;
+    }
     for (int i = 0; i < this->maxStrokeLength; i++) {
         float theta = 0.f;
         if (this->brushImage != nullptr) {
@@ -224,8 +240,6 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
             theta = gradient(prevX, prevY, reference);
         }
 
-
-        // LOOK HERE FOR BUGS IN FUTURE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if (theta + M_PI / 2. <= M_PI / 2.) {
             theta = theta + M_PI / 2.;
         } else {
@@ -305,7 +319,6 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
                 if (!BlurWorker::outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
                     QColor colorWithOpacity = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue(), this->opacity);
                     canvas->setPixelColor(x, y, colorWithOpacity);
-//                    canvas->setPixelColor(x, y, stroke->color);
                 }
             }
         }
@@ -313,10 +326,9 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 }
 
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
-    // NEED TO SOMEHOW CHANGE GAUSSIAN KERNAL BASED ON RADIUS SIZE
     uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize);
+
     // if using separate image for brush stroke direction
-    // DO I NEED TO MAKE THIS A UNIQUE PTR????????????????????????
     if (this->brushImage != nullptr) {
         this->brushImage = gaussianBlur(this->brushImage.get(), brushSize);
     }
@@ -330,14 +342,12 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
             glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
             if (error[2] > this->errorThreshold) {
                 uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas);
-                //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
                 zbuf.push_back(std::move(stroke));
             }
         }
     }
 
     //Randomly sort strokes
-
     std::sort(zbuf.begin(), zbuf.end(), byKey());
 
     for (int i = 0; i < (int)zbuf.size(); i++) {
