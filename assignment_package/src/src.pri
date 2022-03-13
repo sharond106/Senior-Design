@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 SOURCES += \
+    $$PWD/blurworker.cpp \
     $$PWD/main.cpp \
     $$PWD/mainwindow.cpp \
     $$PWD/la.cpp \
@@ -9,6 +10,7 @@ SOURCES += \
     $$PWD/stroke.cpp
 
 HEADERS += \
+    $$PWD/blurworker.h \
     $$PWD/la.h \
     $$PWD/mainwindow.h \
     $$PWD/paint.h \
