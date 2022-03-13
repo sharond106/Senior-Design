@@ -310,6 +310,22 @@ bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
     }
 }
 
+float Paint::jitter(int value, float jitter) {
+    if (jitter <= 0.) {
+        return value;
+    }
+    // HOW DO I JITTER THIS
+
+}
+
+QColor Paint::jitterColor(QColor color) {
+    float hue = jitter(color.hue(), this->hueJitter);
+    float saturation = jitter(color.saturation(), this->satJitter);
+
+    // DO THE REST OF THE JITTERS AND THEN RETURN THE NEW COLOR
+
+}
+
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
     for (std::pair<int, int> point : stroke->points) {
 
@@ -317,8 +333,7 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
                 if (!BlurWorker::outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
-                    QColor colorWithOpacity = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue(), this->opacity);
-                    canvas->setPixelColor(x, y, colorWithOpacity);
+                    canvas->setPixelColor(x, y, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
                 }
             }
         }

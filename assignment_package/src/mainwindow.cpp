@@ -92,6 +92,42 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.curvatureFilter = 1.0;
     }
 
+    if (ui->hueCheck->isChecked()) {
+        paint.hueJitter = ui->hue->value() / 10.;
+    } else {
+        paint.hueJitter = 0.;
+    }
+
+    if (ui->saturationCheck->isChecked()) {
+        paint.satJitter = ui->saturation->value() / 10.;
+    } else {
+        paint.satJitter = 0.;
+    }
+
+    if (ui->valueCheck->isChecked()) {
+        paint.valueJitter = ui->value->value() / 10.;
+    } else {
+        paint.valueJitter = 0.;
+    }
+
+    if (ui->redCheck->isChecked()) {
+        paint.redJitter = ui->red->value() / 10.;
+    } else {
+        paint.redJitter = 0.;
+    }
+
+    if (ui->greenCheck->isChecked()) {
+        paint.greenJitter = ui->green->value() / 10.;
+    } else {
+        paint.greenJitter = 0.;
+    }
+
+    if (ui->blueCheck->isChecked()) {
+        paint.blueJitter = ui->blue->value() / 10.;
+    } else {
+        paint.blueJitter = 0.;
+    }
+
     if (brushImage != nullptr && brushImage->width() > 0) {
         paint.brushImage = mkU<QImage>(*this->brushImage.get());
     } else {
