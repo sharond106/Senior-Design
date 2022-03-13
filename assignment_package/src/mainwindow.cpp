@@ -92,7 +92,7 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.curvatureFilter = 1.0;
     }
 
-    if (brushImage->width() > 0) {
+    if (brushImage != nullptr && brushImage->width() > 0) {
         paint.brushImage = mkU<QImage>(*this->brushImage.get());
     } else {
         paint.brushImage = nullptr;
@@ -107,6 +107,7 @@ std::list<int> MainWindow::loadPaintParams() {
         l.insert(it, l.front() * 2);
         it = l.begin();
     }
+
     return l;
 }
 
@@ -127,6 +128,7 @@ void MainWindow::on_openButton_pressed()
 
 void MainWindow::on_strokeButton_pressed()
 {
+    graphics_scene.clear();
     if (ref == nullptr || ref->width() <= 0) {
         std::cout << "Upload source image first" << std::endl;
         return;
