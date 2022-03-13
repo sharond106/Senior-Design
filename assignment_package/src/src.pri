@@ -3,11 +3,13 @@ DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/blurworker.cpp \
+    $$PWD/helpers.cpp \
     $$PWD/main.cpp \
     $$PWD/mainwindow.cpp \
     $$PWD/la.cpp \
     $$PWD/paint.cpp \
-    $$PWD/stroke.cpp
+    $$PWD/stroke.cpp \
+    $$PWD/strokeworker.cpp
 
 HEADERS += \
     $$PWD/blurworker.h \
@@ -15,4 +17,5 @@ HEADERS += \
     $$PWD/mainwindow.h \
     $$PWD/paint.h \
     $$PWD/smartpointerhelp.h \
-    $$PWD/stroke.h
+    $$PWD/stroke.h \
+    $$PWD/strokeworker.h

@@ -336,8 +336,8 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
         }
     }
 
-    //Randomly sort strokes
 
+    //Randomly sort strokes
     std::sort(zbuf.begin(), zbuf.end(), byKey());
 
     for (int i = 0; i < (int)zbuf.size(); i++) {
