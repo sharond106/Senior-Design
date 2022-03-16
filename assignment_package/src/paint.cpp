@@ -221,6 +221,7 @@ uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, Q
     if (TESTING) {
         col = QColor(255, 0, 0);
     }
+    col = jitterColor(col);
     uPtr<Stroke> stroke = mkU<Stroke>(radius, col, std::pair<int, int>(x0, y0));
 
     int prevX = x0;
@@ -310,20 +311,34 @@ bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
     }
 }
 
-float Paint::jitter(int value, float jitter) {
+int Paint::jitter(int value, float jitter) {
     if (jitter <= 0.) {
         return value;
     }
-    // HOW DO I JITTER THIS
-
+    // Change this value to reduce the randomness of the jittering
+    float range = jitter * 100;
+    int max = std::min(value + range/2., 255.);
+    int min = std::max(value - range/2., 0.);
+    if (min > max) {
+        min = max - 1;
+    }
+    return rand()%(max-min + 1) + min;
 }
 
 QColor Paint::jitterColor(QColor color) {
-    float hue = jitter(color.hue(), this->hueJitter);
-    float saturation = jitter(color.saturation(), this->satJitter);
+    color = color.toHsv();
 
-    // DO THE REST OF THE JITTERS AND THEN RETURN THE NEW COLOR
+    int hue = jitter(color.hue(), this->hueJitter);
+    int saturation = jitter(color.saturation(), this->satJitter);
+    int value = jitter(color.value(), this->valueJitter);
+    color.setHsv(hue, saturation, value);
 
+    int red = jitter(color.red(), this->redJitter);
+    int green = jitter(color.green(), this->greenJitter);
+    int blue = jitter(color.blue(), this->blueJitter);
+    QColor newColor = QColor(cap(red), cap(green), cap(blue));
+
+    return newColor;
 }
 
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {

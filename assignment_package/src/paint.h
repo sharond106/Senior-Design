@@ -24,6 +24,7 @@ public:
     BrushShape brush = CIRCLE;
     float opacity = 1.0;
     float curvatureFilter = 1.;
+    float blurFactor = 1.;
     uPtr<QImage> brushImage = nullptr;
     float hueJitter = 0.;
     float satJitter = 0.;
@@ -69,7 +70,7 @@ public:
     // Returns x, y of largest error and the error of the area
     glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
 
-    float jitter(int value, float jitter);
+    int jitter(int value, float jitter);
 
     QColor jitterColor(QColor color);
 
