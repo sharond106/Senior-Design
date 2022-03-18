@@ -1,13 +1,23 @@
 #ifndef PAINT_H
 #define PAINT_H
 
-#include <QImage>
 #include "smartpointerhelp.h"
 #include "stroke.h"
-#include "glm/vec3.hpp"
 #include "math.h"
-#include <QThreadPool>
 #include "blurworker.h"
+#include "strokeworker.h"
+#include "helpers.h"
+#include "glm/vec3.hpp"
+#include "glm/mat3x3.hpp"
+#include "glm/vec2.hpp"
+#include "glm/geometric.hpp"
+#include "glm/trigonometric.hpp"
+#include <iostream>
+#include <algorithm>
+#include <math.h>
+#include <QThreadPool>
+#include <QImage>
+
 
 enum BrushShape { CIRCLE, SQUARE };
 
@@ -46,26 +56,12 @@ public:
     // For visual debugging
     uPtr<QImage> sobelFilter(QImage* image);
 
-    // Returns gradient orientation of sobel filtered image at x, y
-    // [-pi, pi]
-    float gradient(int x, int y, QImage* image);
-
+    //Blur
     uPtr<QImage> gaussianBlur(QImage* image, int size);
-
-    //Returns true if the coordinates defined by x and y is out of bounds for the image
-    bool outOfBounds(int x, int y, QImage* image);
-
-    // Returns RGB [0-255]
-    glm::vec3 colorAt(int x, int y, QImage* image);
 
     bool inCircle(int x, int y, int centerX, int centerY, float r);
 
     bool checkShape(int x, int y, int centerX, int centerY, float r);
-
-    uPtr<Stroke> paintStroke(int x, int y, int radius, QImage* reference, QImage* canvas);
-
-    // Returns x, y of largest error and the error of the area
-    glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
 
     void applyPaint(Stroke* stroke, QImage* canvas);
 

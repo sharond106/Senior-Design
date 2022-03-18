@@ -1,14 +1,7 @@
-#include <QImage>
-#include "smartpointerhelp.h"
-#include "stroke.h"
-#include "glm/vec3.hpp"
-#include "glm/mat3x3.hpp"
-#include "math.h"
-#include "glm/vec2.hpp"
-#include "glm/geometric.hpp"
-#include "glm/trigonometric.hpp"
-#include <QThreadPool>
+#pragma once
 
+#include "helpers.h"
+//Returns true if the coordinates defined by x and y is out of bounds for the image
 bool outOfBounds(int x, int y, QImage* image) {
     int width = image->width();
     int height = image->height();
@@ -18,6 +11,8 @@ bool outOfBounds(int x, int y, QImage* image) {
     return false;
 }
 
+// Returns gradient orientation of sobel filtered image at x, y
+// [-pi, pi]
 float gradient(int x, int y, QImage* image) {
     glm::mat3 gx = glm::mat3(0.);
     glm::mat3 gy = glm::mat3(0.);
@@ -56,6 +51,7 @@ float gradient(int x, int y, QImage* image) {
     return theta;
 }
 
+// Returns RGB [0-255]
 glm::vec3 colorAt(int x, int y, QImage* image) {
     int pix_x = std::max(std::min(x, image->width() - 1), 0);
     int pix_y = std::max(std::min(y, image->height() - 1), 0);
@@ -115,6 +111,7 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
     return stroke;
 }
 
+// Returns x, y of largest error and the error of the area
 glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas) {
     float error = 0.f;
     float max = 0.f;

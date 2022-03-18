@@ -13,6 +13,7 @@ SOURCES += \
 
 HEADERS += \
     $$PWD/blurworker.h \
+    $$PWD/helpers.h \
     $$PWD/la.h \
     $$PWD/mainwindow.h \
     $$PWD/paint.h \

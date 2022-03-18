@@ -13,22 +13,27 @@
 #include "glm/trigonometric.hpp"
 #include "stroke.h"
 #include "smartpointerhelp.h"
+#include "helpers.h"
 
 
 class StrokeWorker : public QRunnable
 {
 public:
+    int maxStrokeLength, minStrokeLength;
+    float curvatureFilter;
     int x, y, grid;
 
     float errorThreshold;
     QMutex* mutex;
     QImage* reference;
     QImage* blurred;
+    QImage* brushImage;
 
     std::vector<uPtr<Stroke>>* zbuf;
 
     StrokeWorker();
-    StrokeWorker(int x, int y, int grid, QMutex* mutex, QImage* reference, QImage* blurred, std::vector<uPtr<Stroke>>* zbuf);
+    StrokeWorker(int x, int y, int grid, QMutex* mutex, QImage* reference, QImage* blurred, QImage* brushImage,
+                 int maxStrokeLength, int minStrokeLength, float curvatureFilter, std::vector<uPtr<Stroke>>* zbuf);
 
     void run() override;
 };
