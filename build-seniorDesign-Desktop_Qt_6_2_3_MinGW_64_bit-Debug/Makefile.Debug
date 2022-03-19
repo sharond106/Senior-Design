@@ -468,6 +468,7 @@ debug/moc_mainwindow.cpp: ../assignment_package/src/mainwindow.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../assignment_package/src/strokeworker.h \
 		debug/moc_predefs.h \
 		../../../../Qt/6.2.3/mingw_64/bin/moc.exe
 	C:\Qt\6.2.3\mingw_64\bin\moc.exe $(DEFINES) --include C:/dev/SeniorDesign/code/build-seniorDesign-Desktop_Qt_6_2_3_MinGW_64_bit-Debug/debug/moc_predefs.h -IC:/Qt/6.2.3/mingw_64/mkspecs/win32-g++ -IC:/dev/SeniorDesign/code/assignment_package -IC:/dev/SeniorDesign/code/assignment_package/include -IC:/dev/SeniorDesign/code/assignment_package/src -IC:/Qt/6.2.3/mingw_64/include -IC:/Qt/6.2.3/mingw_64/include/QtOpenGLWidgets -IC:/Qt/6.2.3/mingw_64/include/QtWidgets -IC:/Qt/6.2.3/mingw_64/include/QtOpenGL -IC:/Qt/6.2.3/mingw_64/include/QtGui -IC:/Qt/6.2.3/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw900_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw900_64/x86_64-w64-mingw32/include ..\assignment_package\src\mainwindow.h -o debug\moc_mainwindow.cpp
@@ -1080,6 +1081,7 @@ debug/main.o: ../assignment_package/src/main.cpp ../assignment_package/src/mainw
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../assignment_package/src/strokeworker.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
 		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
@@ -1414,50 +1416,8 @@ debug/mainwindow.o: ../assignment_package/src/mainwindow.cpp ../assignment_packa
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qthread.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
-		ui_mainwindow.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/QVariant \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/QAction \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qaction.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QApplication \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qapplication.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qeventloop.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qcoreapplication_platform.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfutureinterface.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qresultstore.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qfuture_impl.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qexception.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qinputmethod.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qguiapplication_platform.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QCheckBox \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcheckbox.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qabstractbutton.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QComboBox \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qcombobox.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QGraphicsView \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgraphicsview.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpainter.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextoption.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qscrollarea.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QGroupBox \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qgroupbox.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QLabel \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qlabel.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qpicture.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtGui/qtextdocument.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QMenu \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qmenu.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QMenuBar \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qmenubar.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QPushButton \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qpushbutton.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QRadioButton \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qradiobutton.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QSlider \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/QSpinBox \
-		../../../../Qt/6.2.3/mingw_64/include/QtWidgets/qspinbox.h
+		../assignment_package/src/strokeworker.h \
+		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\mainwindow.o ..\assignment_package\src\mainwindow.cpp
 
 debug/la.o: ../assignment_package/src/la.cpp ../assignment_package/src/la.h \
@@ -1781,7 +1741,8 @@ debug/paint.o: ../assignment_package/src/paint.cpp ../assignment_package/src/pai
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qobject_impl.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qbindingstorage.h \
 		../../../../Qt/6.2.3/mingw_64/include/QtCore/qdeadlinetimer.h \
-		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h
+		../../../../Qt/6.2.3/mingw_64/include/QtCore/qelapsedtimer.h \
+		../assignment_package/src/strokeworker.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o debug\paint.o ..\assignment_package\src\paint.cpp
 
 debug/stroke.o: ../assignment_package/src/stroke.cpp ../assignment_package/src/stroke.h \

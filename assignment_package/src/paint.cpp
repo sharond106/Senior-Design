@@ -133,7 +133,7 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
                         //flooring and ceiling color getting to bounds of image
                         int pix_x = std::max(std::min(x + i, width - 1), 0);
                         int pix_y = std::max(std::min(y + j, height - 1), 0);
-                        QColor color = image->pixelColor(pix_x, pix_y);
+                        QColor color = getColor(image, pix_x, pix_y);
                         glm::vec3 colorVec = glm::vec3(color.red(), color.green(), color.blue());
                         float scaler = kernel[(j + kernelLim) * span + (i + kernelLim)];
                         sum += colorVec * scaler;
@@ -141,7 +141,7 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
                     }
                 }
                 if (!outOfBounds(x, y, image)) {
-                    result->setPixelColor(x, y, QColor(sum[0], sum[1], sum[2]));
+                    result->setPixelColor(x, y, QColor(cap(sum[0]), cap(sum[1]), cap(sum[2])));
                 } else {
                      std::cout << "BAD " << x << " " << y << std::endl;
                 }
@@ -179,9 +179,7 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
                 if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
-                    QColor colorWithOpacity = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue(), this->opacity);
-                    canvas->setPixelColor(x, y, colorWithOpacity);
-//                    canvas->setPixelColor(x, y, stroke->color);
+                    canvas->setPixelColor(x, y, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
                 }
             }
         }
@@ -189,23 +187,24 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 }
 
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
-    // NEED TO SOMEHOW CHANGE GAUSSIAN KERNAL BASED ON RADIUS SIZE
     uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize);
+
     // if using separate image for brush stroke direction
-    // DO I NEED TO MAKE THIS A UNIQUE PTR????????????????????????
     if (this->brushImage != nullptr) {
         this->brushImage = gaussianBlur(this->brushImage.get(), brushSize);
     }
 
     std::vector<uPtr<Stroke>> zbuf;
     float grid = brushSize;
+    JitterParams jParams = JitterParams(this->hueJitter, this->satJitter, this->valueJitter,
+                                        this->redJitter, this->greenJitter, this->blueJitter);
     if (useThreads) {
     //if (false) {
         QMutex mutex;
         for (int x = 0; x < reference->width(); x += grid) {
             for (int y = 0; y < reference->height(); y += grid) {
                 StrokeWorker* w = new StrokeWorker(x, y, grid, &mutex, blurredRef.get(), canvas, this->brushImage.get(),
-                                                   this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, &zbuf);
+                                                   this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, &zbuf, jParams);
                 QThreadPool::globalInstance()->start(w);
             }
         }
@@ -218,14 +217,13 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
                 glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
                 if (error[2] > this->errorThreshold) {
                     uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas, this->brushImage.get(),
-                            this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter);
+                            this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, jParams);
                     //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
                     zbuf.push_back(std::move(stroke));
                 }
             }
         }
     }
-
 
     //Randomly sort strokes
     std::sort(zbuf.begin(), zbuf.end(), byKey());

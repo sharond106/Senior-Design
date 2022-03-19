@@ -30,10 +30,11 @@ public:
     QImage* brushImage;
 
     std::vector<uPtr<Stroke>>* zbuf;
+    JitterParams jParams;
 
     StrokeWorker();
     StrokeWorker(int x, int y, int grid, QMutex* mutex, QImage* reference, QImage* blurred, QImage* brushImage,
-                 int maxStrokeLength, int minStrokeLength, float curvatureFilter, std::vector<uPtr<Stroke>>* zbuf);
+                 int maxStrokeLength, int minStrokeLength, float curvatureFilter, std::vector<uPtr<Stroke>>* zbuf, JitterParams& jParams);
 
     void run() override;
 };

@@ -43,6 +43,13 @@ private slots:
 
     void on_clearStrokeButton_pressed();
 
+    void on_noneStyle_pressed();
+    void on_impressionistStyle_pressed();
+    void on_expressionistStyle_pressed();
+    void on_coloristStyle_pressed();
+    void on_pointillistStyle_pressed();
+    void on_psychedelicStyle_pressed();
+
 private:
     Ui::MainWindow *ui;
 
@@ -57,6 +64,7 @@ private:
     //Temp variables
     int counter = 50;
 
+    void loadStyleParams();
     std::list<int> loadPaintParams();
     void resizeBrushImage();
 };

@@ -2,6 +2,19 @@
 
 #include "helpers.h"
 //Returns true if the coordinates defined by x and y is out of bounds for the image
+
+int cap(int c) {
+    return std::max(std::min(c, 255), 0);
+}
+
+QColor getColor(QImage* image, int x, int y) {
+    QColor color = image->pixelColor(x, y);
+    color.setRed(cap(color.red()));
+    color.setGreen(cap(color.green()));
+    color.setBlue(cap(color.blue()));
+    return color;
+}
+
 bool outOfBounds(int x, int y, QImage* image) {
     int width = image->width();
     int height = image->height();
@@ -40,7 +53,7 @@ float gradient(int x, int y, QImage* image) {
         for (int j = -1; j <= 1; j++) {
             int pix_x = std::max(std::min(x + i, width - 1), 0);
             int pix_y = std::max(std::min(y + j, height - 1), 0);
-            QColor color = image->pixelColor(pix_x,pix_y);
+            QColor color = getColor(image, pix_x, pix_y);
             float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
             glm::vec3 colorVec = glm::vec3(luminance);
             gxSum += gx[i + 1][j + 1] * colorVec;
@@ -55,14 +68,46 @@ float gradient(int x, int y, QImage* image) {
 glm::vec3 colorAt(int x, int y, QImage* image) {
     int pix_x = std::max(std::min(x, image->width() - 1), 0);
     int pix_y = std::max(std::min(y, image->height() - 1), 0);
-    QColor color = image->pixelColor(pix_x, pix_y);
+    QColor color = getColor(image, pix_x, pix_y);
     return glm::vec3(color.red(), color.green(), color.blue());
 }
 
-uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* brushImage,
-                         int maxStrokeLength, int minStrokeLength, float curvatureFilter) {
-    QColor col = reference->pixelColor(x0, y0);
+int jitter(int value, float jitter) {
+    if (jitter <= 0.) {
+        return value;
+    }
+    // Change this value to reduce the randomness of the jittering
+    float range = jitter * 100;
+    int max = std::min(value + range/2., 255.);
+    int min = std::max(value - range/2., 0.);
+    if (min > max) {
+        min = max - 1;
+    }
+    return rand()%(max-min + 1) + min;
+}
 
+QColor jitterColor(QColor color, JitterParams& jParams) {
+    color = color.toHsv();
+
+    //int hue = jitter(color.hue(), jParams.hueJitter);
+    int hue = color.hue()%256;
+    int saturation = jitter(color.saturation(), jParams.satJitter);
+    int value = jitter(color.value(), jParams.valueJitter);
+    color.setHsv(hue, saturation, value);
+
+    int red = jitter(color.red(), jParams.redJitter);
+    int green = jitter(color.green(), jParams.greenJitter);
+    int blue = jitter(color.blue(), jParams.blueJitter);
+    QColor newColor = QColor(cap(red), cap(green), cap(blue));
+
+    return newColor;
+}
+
+uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* brushImage,
+                         int maxStrokeLength, int minStrokeLength, float curvatureFilter, JitterParams& jParams) {
+    QColor col = getColor(reference, x0, y0);
+
+    col = jitterColor(col, jParams);
     uPtr<Stroke> stroke = mkU<Stroke>(radius, col, std::pair<int, int>(x0, y0));
 
     int prevX = x0;

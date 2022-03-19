@@ -23,28 +23,25 @@ enum BrushShape { CIRCLE, SQUARE };
 
 class Paint
 {
-public:
-//    const float kernel [121] = {0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849,
-//                                0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
-//                                0.007559,	0.00799,	0.008342,	0.008604,	0.008764,	0.008819,	0.008764,	0.008604,	0.008342,	0.00799,	0.007559,
-//                                0.007795,	0.00824,	0.008604,	0.008873,	0.009039,	0.009095,	0.009039,	0.008873,	0.008604,	0.00824,	0.007795,
-//                                0.007941,	0.008394,	0.008764,	0.009039,	0.009208,	0.009265,	0.009208,	0.009039,	0.008764,	0.008394,	0.007941,
-//                                0.00799,    0.008446,	0.008819,	0.009095,	0.009265,	0.009322,	0.009265,	0.009095,	0.008819,	0.008446,	0.00799,
-//                                0.007941,	0.008394,	0.008764,	0.009039,	0.009208,	0.009265,	0.009208,	0.009039,	0.008764,	0.008394,	0.007941,
-//                                0.007795,	0.00824,	0.008604,	0.008873,	0.009039,	0.009095,	0.009039,	0.008873,	0.008604,	0.00824,	0.007795,
-//                                0.007559,	0.00799,	0.008342,	0.008604,	0.008764,	0.008819,	0.008764,	0.008604,	0.008342,	0.00799,	0.007559,
-//                                0.007239,	0.007653,	0.00799,	0.00824,	0.008394,	0.008446,	0.008394,	0.00824,	0.00799,	0.007653,	0.007239,
-//                                0.006849,	0.007239,	0.007559,	0.007795,	0.007941,	0.00799,	0.007941,	0.007795,	0.007559,	0.007239,	0.006849};
 
-    int minStrokeLength = 7;
-    int maxStrokeLength = 12;      // pass these in through constructor eventually
+public:
+
+    int minStrokeLength = 1;
+    int maxStrokeLength = -1;
     float errorThreshold = 200.;
     bool useThreads = true;
     int threadCount = 8;
     BrushShape brush = CIRCLE;
     float opacity = 1.0;
     float curvatureFilter = 1.;
+    float blurFactor = 1.;
     uPtr<QImage> brushImage = nullptr;
+    float hueJitter = 0.;
+    float satJitter = 0.;
+    float valueJitter = 0.;
+    float redJitter = 0.;
+    float greenJitter = 0.;
+    float blueJitter = 0.;
 
     Paint();
 
@@ -57,7 +54,7 @@ public:
     uPtr<QImage> sobelFilter(QImage* image);
 
     //Blur
-    uPtr<QImage> gaussianBlur(QImage* image, int size);
+    uPtr<QImage> gaussianBlur(QImage* image, int size);        
 
     bool inCircle(int x, int y, int centerX, int centerY, float r);
 
