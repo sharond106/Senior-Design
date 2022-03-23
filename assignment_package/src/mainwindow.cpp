@@ -229,7 +229,7 @@ std::list<int> MainWindow::loadPaintParams() {
     if (ui->blurFactorCheck->isChecked()) {
         paint.blurFactor = ui->blurFactor->value() / 10.;
     } else {
-        paint.blurFactor = 1.;
+        paint.blurFactor = .5;
     }
 
     if (ui->hueCheck->isChecked()) {

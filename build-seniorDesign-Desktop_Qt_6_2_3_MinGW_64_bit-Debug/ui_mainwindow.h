@@ -252,8 +252,8 @@ public:
         blurFactor->setGeometry(QRect(140, 180, 111, 22));
         blurFactor->setMaximum(10);
         blurFactor->setSingleStep(1);
-        blurFactor->setValue(10);
-        blurFactor->setSliderPosition(10);
+        blurFactor->setValue(5);
+        blurFactor->setSliderPosition(5);
         blurFactor->setOrientation(Qt::Horizontal);
         blurFactor->setTickInterval(1);
         styleGroup = new QGroupBox(centralWidget);
@@ -303,7 +303,7 @@ public:
         label_4->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1374, 22));
+        menuBar->setGeometry(QRect(0, 0, 1374, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);

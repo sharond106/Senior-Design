@@ -187,7 +187,8 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
 }
 
 void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
-    uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize);
+    //uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize);
+    uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize * (.5 + this->blurFactor));
 
     // if using separate image for brush stroke direction
     if (this->brushImage != nullptr) {
