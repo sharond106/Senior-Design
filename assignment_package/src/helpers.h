@@ -11,6 +11,7 @@
 #include "glm/geometric.hpp"
 #include "glm/trigonometric.hpp"
 #include <QThreadPool>
+#include <iostream>
 
 struct JitterParams {
     float hueJitter, satJitter, valueJitter, redJitter, greenJitter, blueJitter;

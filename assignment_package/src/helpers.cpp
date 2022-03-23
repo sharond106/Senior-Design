@@ -96,21 +96,18 @@ QColor jitterColor(QColor color, JitterParams& jParams) {
         float range = jParams.hueJitter * 100;
         int max = color.hue() + range/2.;
         int min = color.hue() - range/2.;
-        int temp = min;
+        // make range positive by shifting up
         if (min < 0) {
             max -= min;
             min = 0;
-        } else {
-            temp = 0;
         }
         // this is giving HSV parameters out of range
-        hue = ((rand()%(max-min + 1) + min) + temp) % 360;
+        hue = (rand()%(max-min + 1) + min) % 360;
     }
 
-//    int saturation = jitter(color.saturation(), jParams.satJitter);
-//    int value = jitter(color.value(), jParams.valueJitter);
-    int saturation = color.saturation();
-    int value = color.value();
+    int saturation = jitter(color.saturation(), jParams.satJitter);
+    int value = jitter(color.value(), jParams.valueJitter);
+
     color.setHsv(hue, saturation, value);
 
     int red = jitter(color.red(), jParams.redJitter);
