@@ -328,9 +328,28 @@ int Paint::jitter(int value, float jitter) {
 QColor Paint::jitterColor(QColor color) {
     color = color.toHsv();
 
-    int hue = jitter(color.hue(), this->hueJitter);
-    int saturation = jitter(color.saturation(), this->satJitter);
-    int value = jitter(color.value(), this->valueJitter);
+//    int hue = jitter(color.hue(), this->hueJitter);
+    int hue = color.hue();
+    if (this->hueJitter > 0.) {
+        // Change this value to reduce the randomness of the jittering
+        float range = this->hueJitter * 100;
+        int max = color.hue() + range/2.;
+        int min = color.hue() - range/2.;
+        int temp = min;
+        if (min < 0) {
+            max -= min;
+            min = 0;
+        } else {
+            temp = 0;
+        }
+        // this is giving HSV parameters out of range
+        hue = ((rand()%(max-min + 1) + min) + temp) % 360;
+    }
+
+//    int saturation = jitter(color.saturation(), this->satJitter);
+//    int value = jitter(color.value(), this->valueJitter);
+    int saturation = color.saturation();
+    int value = color.value();
     color.setHsv(hue, saturation, value);
 
     int red = jitter(color.red(), this->redJitter);
