@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <math.h>
 #include "glm/trigonometric.hpp"
+#include "helpers.h"
 
 class BlurWorker : public QRunnable
 {
@@ -29,7 +30,6 @@ public:
     BlurWorker(QMutex* mutex, int id, QImage* reference, int threadCount,
                int kernelLim, int span, std::vector<float>& kernel, QImage* blurred);
     void run() override;
-    static bool outOfBounds(int x, int y, QImage* image);
 };
 
 #endif // BLURWORKER_H

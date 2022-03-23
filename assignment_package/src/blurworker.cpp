@@ -52,11 +52,3 @@ void BlurWorker::run() {
     }
 }
 
-bool BlurWorker::outOfBounds(int x, int y, QImage* image) {
-    int width = image->width();
-    int height = image->height();
-    if (x >= width || y >= height || x < 0 || y < 0) {
-        return true;
-    }
-    return false;
-}

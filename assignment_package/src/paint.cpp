@@ -1,11 +1,5 @@
 #include "paint.h"
-#include "glm/mat3x3.hpp"
-#include "glm/vec2.hpp"
-#include "glm/geometric.hpp"
-#include <iostream>
-#include <algorithm>
-#include <math.h>
-#include "glm/trigonometric.hpp"
+
 
 
 bool TESTING = false;
@@ -114,44 +108,6 @@ uPtr<QImage> Paint::sobelFilter(QImage* image) {
     return filteredImage;
 }
 
-float Paint::gradient(int x, int y, QImage* image) {
-    glm::mat3 gx = glm::mat3(0.);
-    glm::mat3 gy = glm::mat3(0.);
-
-    gx[0].x = 3.;
-    gx[0].z = -3.;
-    gx[1].x = 10.;
-    gx[1].z = -10.;
-    gx[2].x = 3.;
-    gx[2].z = -3.;
-    gy[0].x = 3.;
-    gy[0].y = 10.;
-    gy[0].z = 3.;
-    gy[2].x = -3.;
-    gy[2].y = -10.;
-    gy[2].z = -3.;
-
-    int width = image->width();
-    int height = image->height();
-
-    glm::vec3 gySum = glm::vec3(0.);
-    glm::vec3 gxSum = glm::vec3(0.);
-
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            int pix_x = std::max(std::min(x + i, width - 1), 0);
-            int pix_y = std::max(std::min(y + j, height - 1), 0);
-            QColor color = getColor(image, pix_x,pix_y);
-            float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
-            glm::vec3 colorVec = glm::vec3(luminance);
-            gxSum += gx[i + 1][j + 1] * colorVec;
-            gySum += gy[i + 1][j + 1] * colorVec;
-        }
-    }
-    float theta = atan2(gxSum.x, gySum.x);
-    return theta;
-}
-
 //size is brush size, radius
 uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
     int height = image->height();
@@ -184,7 +140,7 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
                         counter++;
                     }
                 }
-                if (!BlurWorker::outOfBounds(x, y, image)) {
+                if (!outOfBounds(x, y, image)) {
                     result->setPixelColor(x, y, QColor(cap(sum[0]), cap(sum[1]), cap(sum[2])));
                 } else {
                      std::cout << "BAD " << x << " " << y << std::endl;
@@ -194,101 +150,6 @@ uPtr<QImage> Paint::gaussianBlur(QImage* image, int size) {
         }
     }
     return result;
-}
-
-int Paint::cap(int c) {
-    return std::max(std::min(c, 255), 0);
-}
-
-QColor Paint::getColor(QImage* image, int x, int y) {
-    QColor color = image->pixelColor(x, y);
-    color.setRed(cap(color.red()));
-    color.setGreen(cap(color.green()));
-    color.setBlue(cap(color.blue()));
-    return color;
-}
-
-glm::vec3 Paint::colorAt(int x, int y, QImage* image) {
-    int pix_x = std::max(std::min(x, image->width() - 1), 0);
-    int pix_y = std::max(std::min(y, image->height() - 1), 0);
-    QColor color = getColor(image, pix_x, pix_y);
-    return glm::vec3(color.red(), color.green(), color.blue());
-}
-
-uPtr<Stroke> Paint::paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas) {
-    QColor col = getColor(reference, x0, y0);
-
-    if (TESTING) {
-        col = QColor(255, 0, 0);
-    }
-    col = jitterColor(col);
-    uPtr<Stroke> stroke = mkU<Stroke>(radius, col, std::pair<int, int>(x0, y0));
-
-    int prevX = x0;
-    int prevY = y0;
-    float prevDeltaX = 0.;
-    float prevDeltaY = 0.;
-
-    // default max length = 4 X radius
-    if (this->maxStrokeLength == -1) {
-        this->maxStrokeLength = 4 * radius;
-    }
-    for (int i = 0; i < this->maxStrokeLength; i++) {
-        float theta = 0.f;
-        if (this->brushImage != nullptr) {
-            theta = gradient(prevX, prevY, this->brushImage.get());
-        } else {
-            theta = gradient(prevX, prevY, reference);
-        }
-
-        if (theta + M_PI / 2. <= M_PI / 2.) {
-            theta = theta + M_PI / 2.;
-        } else {
-            theta = theta - M_PI / 2.;
-        }
-
-        float deltaX = radius * cos(theta);
-        float deltaY = radius * sin(theta);
-
-        // Curvature filter
-        deltaX = (this->curvatureFilter * deltaX) + ((1. - this->curvatureFilter) * prevDeltaX);
-        deltaY = (this->curvatureFilter * deltaY) + ((1. - this->curvatureFilter) * prevDeltaY);
-
-        int x = prevX + round(deltaX);
-        int y = prevY + round(deltaY);
-        if (BlurWorker::outOfBounds(x, y, reference)) {
-            return stroke;
-        }
-        if (i > minStrokeLength && glm::distance(colorAt(x, y, reference), colorAt(x, y, canvas)) <
-                                   glm::distance(colorAt(x, y, reference), colorAt(x0, y0, reference))) {
-            return stroke;
-        }
-        stroke->addPoint(x, y);
-        prevX = x;
-        prevY = y;
-        prevDeltaX = deltaX;
-        prevDeltaY = deltaY;
-    }
-    return stroke;
-}
-
-glm::vec3 Paint::areaError(int x, int y, int grid, QImage* reference, QImage* canvas) {
-    float error = 0.f;
-    float max = 0.f;
-    int maxX;
-    int maxY;
-    for (int i = std::max(x - grid / 2., 0.); i < std::min(double(reference->width()), x + grid / 2.); i += 1) {
-        for (int j = std::max(y - grid / 2., 0.); j < std::min(double(reference->height()), y + grid / 2.); j += 1) {
-            float currError = glm::distance(colorAt(i, j, reference), colorAt(i, j, canvas));
-            if (currError > max) {
-                max = currError;
-                maxX = i;
-                maxY = j;
-            }
-            error += currError;
-        }
-    }
-    return glm::vec3(maxX, maxY, error);
 }
 
 bool Paint::inCircle(int x, int y, int centerX, int centerY, float r) {
@@ -311,62 +172,13 @@ bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
     }
 }
 
-int Paint::jitter(int value, float jitter) {
-    if (jitter <= 0.) {
-        return value;
-    }
-    // Change this value to reduce the randomness of the jittering
-    float range = jitter * 100;
-    int max = std::min(value + range/2., 255.);
-    int min = std::max(value - range/2., 0.);
-    if (min > max) {
-        min = max - 1;
-    }
-    return rand()%(max-min + 1) + min;
-}
-
-QColor Paint::jitterColor(QColor color) {
-    color = color.toHsv();
-
-//    int hue = jitter(color.hue(), this->hueJitter);
-    int hue = color.hue();
-    if (this->hueJitter > 0.) {
-        // Change this value to reduce the randomness of the jittering
-        float range = this->hueJitter * 100;
-        int max = color.hue() + range/2.;
-        int min = color.hue() - range/2.;
-        int temp = min;
-        if (min < 0) {
-            max -= min;
-            min = 0;
-        } else {
-            temp = 0;
-        }
-        // this is giving HSV parameters out of range
-        hue = ((rand()%(max-min + 1) + min) + temp) % 360;
-    }
-
-//    int saturation = jitter(color.saturation(), this->satJitter);
-//    int value = jitter(color.value(), this->valueJitter);
-    int saturation = color.saturation();
-    int value = color.value();
-    color.setHsv(hue, saturation, value);
-
-    int red = jitter(color.red(), this->redJitter);
-    int green = jitter(color.green(), this->greenJitter);
-    int blue = jitter(color.blue(), this->blueJitter);
-    QColor newColor = QColor(cap(red), cap(green), cap(blue));
-
-    return newColor;
-}
-
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
     for (std::pair<int, int> point : stroke->points) {
 
         // MAYBE NOT +1?
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
-                if (!BlurWorker::outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
+                if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
                     canvas->setPixelColor(x, y, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
                 }
             }
@@ -384,14 +196,31 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
 
     std::vector<uPtr<Stroke>> zbuf;
     float grid = brushSize;
-    for (int x = 0; x < reference->width(); x += grid) {
-        for (int y = 0; y < reference->height(); y += grid) {
+    JitterParams jParams = JitterParams(this->hueJitter, this->satJitter, this->valueJitter,
+                                        this->redJitter, this->greenJitter, this->blueJitter);
+    if (useThreads) {
+    //if (false) {
+        QMutex mutex;
+        for (int x = 0; x < reference->width(); x += grid) {
+            for (int y = 0; y < reference->height(); y += grid) {
+                StrokeWorker* w = new StrokeWorker(x, y, grid, &mutex, blurredRef.get(), canvas, this->brushImage.get(),
+                                                   this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, &zbuf, jParams);
+                QThreadPool::globalInstance()->start(w);
+            }
+        }
+        QThreadPool::globalInstance()->waitForDone();
+    } else {
+        for (int x = 0; x < reference->width(); x += grid) {
+            for (int y = 0; y < reference->height(); y += grid) {
 
-            // TRY SIMILAR FIX FOR BRIGHT EDGES ON BLURRED IMAGE
-            glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
-            if (error[2] > this->errorThreshold) {
-                uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas);
-                zbuf.push_back(std::move(stroke));
+                // TRY SIMILAR FIX FOR BRIGHT EDGES ON BLURRED IMAGE
+                glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
+                if (error[2] > this->errorThreshold) {
+                    uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas, this->brushImage.get(),
+                            this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, jParams);
+                    //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
+                    zbuf.push_back(std::move(stroke));
+                }
             }
         }
     }
