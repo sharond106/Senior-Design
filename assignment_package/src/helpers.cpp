@@ -8,7 +8,9 @@ int cap(int c) {
 }
 
 QColor getColor(QImage* image, int x, int y) {
-    QColor color = image->pixelColor(x, y);
+    int pix_x = std::max(std::min(x, image->width() - 1), 0);
+    int pix_y = std::max(std::min(y, image->height() - 1), 0);
+    QColor color = image->pixelColor(pix_x, pix_y);
     color.setRed(cap(color.red()));
     color.setGreen(cap(color.green()));
     color.setBlue(cap(color.blue()));
@@ -66,9 +68,7 @@ float gradient(int x, int y, QImage* image) {
 
 // Returns RGB [0-255]
 glm::vec3 colorAt(int x, int y, QImage* image) {
-    int pix_x = std::max(std::min(x, image->width() - 1), 0);
-    int pix_y = std::max(std::min(y, image->height() - 1), 0);
-    QColor color = getColor(image, pix_x, pix_y);
+    QColor color = getColor(image, x, y);
     return glm::vec3(color.red(), color.green(), color.blue());
 }
 
@@ -129,7 +129,10 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
     int prevY = y0;
     float prevDeltaX = 0.;
     float prevDeltaY = 0.;
-    // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS
+    // DEFAULT MAX STROKE LENGTH SHOULD BE 4 X RADIUS (not doing this also won't allow the second image for gradient to work)
+    if (maxStrokeLength < 0) {
+        maxStrokeLength = 4 * radius;
+    }
     for (int i = 0; i < maxStrokeLength; i++) {
         float theta = 0.f;
         if (brushImage != nullptr) {
