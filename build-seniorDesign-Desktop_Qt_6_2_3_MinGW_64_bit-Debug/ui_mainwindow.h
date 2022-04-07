@@ -73,10 +73,13 @@ public:
     QRadioButton *impressionistStyle;
     QRadioButton *noneStyle;
     QRadioButton *coloristStyle;
-    QGraphicsView *scene_display_2;
+    QGroupBox *groupBox;
     QPushButton *strokeButton;
+    QGraphicsView *scene_display_2;
     QPushButton *clearStrokeButton;
-    QLabel *label_4;
+    QPushButton *brushImageButton;
+    QGraphicsView *scene_display_3;
+    QPushButton *clearBrushImageButton;
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -84,7 +87,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1374, 729);
+        MainWindow->resize(1384, 729);
         actionQuit = new QAction(MainWindow);
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralWidget = new QWidget(MainWindow);
@@ -258,7 +261,7 @@ public:
         blurFactor->setTickInterval(1);
         styleGroup = new QGroupBox(centralWidget);
         styleGroup->setObjectName(QString::fromUtf8("styleGroup"));
-        styleGroup->setGeometry(QRect(1140, 90, 171, 261));
+        styleGroup->setGeometry(QRect(1140, 90, 231, 211));
         psychedelicStyle = new QRadioButton(styleGroup);
         psychedelicStyle->setObjectName(QString::fromUtf8("psychedelicStyle"));
         psychedelicStyle->setGeometry(QRect(10, 180, 110, 24));
@@ -278,32 +281,38 @@ public:
         coloristStyle = new QRadioButton(styleGroup);
         coloristStyle->setObjectName(QString::fromUtf8("coloristStyle"));
         coloristStyle->setGeometry(QRect(10, 120, 110, 24));
-        scene_display_2 = new QGraphicsView(centralWidget);
-        scene_display_2->setObjectName(QString::fromUtf8("scene_display_2"));
-        scene_display_2->setGeometry(QRect(1140, 410, 201, 131));
-        strokeButton = new QPushButton(centralWidget);
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QString::fromUtf8("groupBox"));
+        groupBox->setGeometry(QRect(1140, 310, 231, 361));
+        strokeButton = new QPushButton(groupBox);
         strokeButton->setObjectName(QString::fromUtf8("strokeButton"));
-        strokeButton->setGeometry(QRect(1140, 380, 201, 31));
-        clearStrokeButton = new QPushButton(centralWidget);
+        strokeButton->setGeometry(QRect(10, 20, 141, 31));
+        scene_display_2 = new QGraphicsView(groupBox);
+        scene_display_2->setObjectName(QString::fromUtf8("scene_display_2"));
+        scene_display_2->setGeometry(QRect(10, 50, 201, 131));
+        clearStrokeButton = new QPushButton(groupBox);
         clearStrokeButton->setObjectName(QString::fromUtf8("clearStrokeButton"));
-        clearStrokeButton->setGeometry(QRect(1140, 540, 81, 31));
-        label_4 = new QLabel(centralWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(1140, 360, 211, 21));
+        clearStrokeButton->setGeometry(QRect(130, 150, 81, 31));
+        brushImageButton = new QPushButton(groupBox);
+        brushImageButton->setObjectName(QString::fromUtf8("brushImageButton"));
+        brushImageButton->setGeometry(QRect(10, 190, 141, 31));
+        scene_display_3 = new QGraphicsView(groupBox);
+        scene_display_3->setObjectName(QString::fromUtf8("scene_display_3"));
+        scene_display_3->setGeometry(QRect(10, 220, 201, 131));
+        clearBrushImageButton = new QPushButton(groupBox);
+        clearBrushImageButton->setObjectName(QString::fromUtf8("clearBrushImageButton"));
+        clearBrushImageButton->setGeometry(QRect(130, 320, 81, 31));
         MainWindow->setCentralWidget(centralWidget);
+        groupBox->raise();
         parametersGroup->raise();
         styleGroup->raise();
         scene_display->raise();
         openButton->raise();
         saveButton->raise();
         paintButton->raise();
-        scene_display_2->raise();
-        strokeButton->raise();
-        clearStrokeButton->raise();
-        label_4->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1374, 21));
+        menuBar->setGeometry(QRect(0, 0, 1384, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -351,9 +360,11 @@ public:
         impressionistStyle->setText(QCoreApplication::translate("MainWindow", "Impressionist", nullptr));
         noneStyle->setText(QCoreApplication::translate("MainWindow", "None", nullptr));
         coloristStyle->setText(QCoreApplication::translate("MainWindow", "Colorist Wash", nullptr));
-        strokeButton->setText(QCoreApplication::translate("MainWindow", "Upload Image for Stroke Gradient", nullptr));
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "Optional but upload source image first!", nullptr));
+        strokeButton->setText(QCoreApplication::translate("MainWindow", "Upload Stroke Gradient", nullptr));
         clearStrokeButton->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "Optional but upload source image first!", nullptr));
+        brushImageButton->setText(QCoreApplication::translate("MainWindow", "Upload Brush Image", nullptr));
+        clearBrushImageButton->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

@@ -11,7 +11,7 @@
  */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr), brushImage(nullptr)
+    ui(new Ui::MainWindow), paint(), ref(nullptr), imageObject(nullptr), brushImage(nullptr), gradientImage(nullptr)
 {
     ui->setupUi(this);
     ui->scene_display->setWindowTitle(QString("Painting Generator"));
@@ -301,6 +301,35 @@ void MainWindow::on_openButton_pressed()
     ref->load(imagePath);
     imageObject = mkU<QImage>();
     imageObject->load(imagePath);
+}
+
+void MainWindow::on_brushImageButton_pressed() {
+    graphics_scene.clear();
+    if (ref == nullptr || ref->width() <= 0) {
+        std::cout << "Upload source image first" << std::endl;
+        return;
+    }
+    brushImagePath = QFileDialog::getOpenFileName(
+                this,
+                tr("Open File"),
+                "",
+                tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
+                );
+
+    resizeBrushImage();
+    // display it in the viewer
+    QPixmap pixmap(QPixmap::fromImage(*brushImage));
+    graphics_scene_for_brush.addPixmap(pixmap);
+    graphics_scene_for_brush.setSceneRect(pixmap.rect());
+
+    ui->scene_display_3->setScene(&graphics_scene_for_brush);
+    ui->scene_display_3->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
+}
+
+void MainWindow::on_clearBrushImageButton_pressed() {
+    brushImage = mkU<QImage>();
+    graphics_scene_for_brush.clear();
+    ui->scene_display_3->setScene(&graphics_scene_for_brush);
 }
 
 void MainWindow::on_strokeButton_pressed()

@@ -22,6 +22,7 @@ private:
     QImage rendered_image;
     QGraphicsScene graphics_scene;
     QGraphicsScene graphics_scene_for_stroke;
+    QGraphicsScene graphics_scene_for_brush;
 
 public:
     explicit MainWindow(QWidget *parent = 0);
@@ -49,7 +50,8 @@ private slots:
     void on_coloristStyle_pressed();
     void on_pointillistStyle_pressed();
     void on_psychedelicStyle_pressed();
-
+    void on_brushImageButton_pressed();
+    void on_clearBrushImageButton_pressed();
 private:
     Ui::MainWindow *ui;
 
@@ -57,6 +59,7 @@ private:
     uPtr<QImage> ref;
     uPtr<QImage> imageObject;
     uPtr<QImage> brushImage;
+    uPtr<QImage> gradientImage;
     QGraphicsScene *scene;
     Paint paint;
     QString brushImagePath;

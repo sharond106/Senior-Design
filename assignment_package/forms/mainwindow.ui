@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1374</width>
+    <width>1384</width>
     <height>729</height>
    </rect>
   </property>
@@ -611,8 +611,8 @@
      <rect>
       <x>1140</x>
       <y>90</y>
-      <width>171</width>
-      <height>261</height>
+      <width>231</width>
+      <height>211</height>
      </rect>
     </property>
     <property name="title">
@@ -700,73 +700,106 @@
      </property>
     </widget>
    </widget>
-   <widget class="QGraphicsView" name="scene_display_2">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
       <x>1140</x>
-      <y>410</y>
-      <width>201</width>
-      <height>131</height>
+      <y>310</y>
+      <width>231</width>
+      <height>361</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QPushButton" name="strokeButton">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>380</y>
-      <width>201</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Upload Image for Stroke Gradient</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="clearStrokeButton">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>540</y>
-      <width>81</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Clear</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_4">
-    <property name="geometry">
-     <rect>
-      <x>1140</x>
-      <y>360</y>
-      <width>211</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
+    <property name="title">
      <string>Optional but upload source image first!</string>
     </property>
+    <widget class="QPushButton" name="strokeButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Upload Stroke Gradient</string>
+     </property>
+    </widget>
+    <widget class="QGraphicsView" name="scene_display_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>201</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="clearStrokeButton">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>150</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="brushImageButton">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Upload Brush Image</string>
+     </property>
+    </widget>
+    <widget class="QGraphicsView" name="scene_display_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>220</y>
+       <width>201</width>
+       <height>131</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="clearBrushImageButton">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>320</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Clear</string>
+     </property>
+    </widget>
    </widget>
+   <zorder>groupBox</zorder>
    <zorder>parametersGroup</zorder>
    <zorder>styleGroup</zorder>
    <zorder>scene_display</zorder>
    <zorder>openButton</zorder>
    <zorder>saveButton</zorder>
    <zorder>paintButton</zorder>
-   <zorder>scene_display_2</zorder>
-   <zorder>strokeButton</zorder>
-   <zorder>clearStrokeButton</zorder>
-   <zorder>label_4</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1374</width>
-     <height>21</height>
+     <width>1384</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
