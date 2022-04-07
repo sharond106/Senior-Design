@@ -44,7 +44,7 @@ int jitter(int value, float jitter);
 
 QColor jitterColor(QColor color, JitterParams& jParams);
 
-uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* brushImage,
+uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* gradientImage,
                          int maxStrokeLength, int minStrokeLength, float curvatureFilter, JitterParams& jParams);
 
 glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);

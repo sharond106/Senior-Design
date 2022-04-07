@@ -38,14 +38,14 @@ QT_MOC_LITERAL(63, 22), // "on_paintButton_pressed"
 QT_MOC_LITERAL(86, 21), // "on_saveButton_pressed"
 QT_MOC_LITERAL(108, 23), // "on_strokeButton_pressed"
 QT_MOC_LITERAL(132, 28), // "on_clearStrokeButton_pressed"
-QT_MOC_LITERAL(161, 20), // "on_noneStyle_pressed"
-QT_MOC_LITERAL(182, 29), // "on_impressionistStyle_pressed"
-QT_MOC_LITERAL(212, 29), // "on_expressionistStyle_pressed"
-QT_MOC_LITERAL(242, 24), // "on_coloristStyle_pressed"
-QT_MOC_LITERAL(267, 27), // "on_pointillistStyle_pressed"
-QT_MOC_LITERAL(295, 27), // "on_psychedelicStyle_pressed"
-QT_MOC_LITERAL(323, 27), // "on_brushImageButton_pressed"
-QT_MOC_LITERAL(351, 32) // "on_clearBrushImageButton_pressed"
+QT_MOC_LITERAL(161, 27), // "on_brushImageButton_pressed"
+QT_MOC_LITERAL(189, 32), // "on_clearBrushImageButton_pressed"
+QT_MOC_LITERAL(222, 20), // "on_noneStyle_pressed"
+QT_MOC_LITERAL(243, 29), // "on_impressionistStyle_pressed"
+QT_MOC_LITERAL(273, 29), // "on_expressionistStyle_pressed"
+QT_MOC_LITERAL(303, 24), // "on_coloristStyle_pressed"
+QT_MOC_LITERAL(328, 27), // "on_pointillistStyle_pressed"
+QT_MOC_LITERAL(356, 27) // "on_psychedelicStyle_pressed"
 
     },
     "MainWindow\0on_actionQuit_triggered\0\0"
@@ -53,13 +53,13 @@ QT_MOC_LITERAL(351, 32) // "on_clearBrushImageButton_pressed"
     "on_paintButton_pressed\0on_saveButton_pressed\0"
     "on_strokeButton_pressed\0"
     "on_clearStrokeButton_pressed\0"
+    "on_brushImageButton_pressed\0"
+    "on_clearBrushImageButton_pressed\0"
     "on_noneStyle_pressed\0on_impressionistStyle_pressed\0"
     "on_expressionistStyle_pressed\0"
     "on_coloristStyle_pressed\0"
     "on_pointillistStyle_pressed\0"
-    "on_psychedelicStyle_pressed\0"
-    "on_brushImageButton_pressed\0"
-    "on_clearBrushImageButton_pressed"
+    "on_psychedelicStyle_pressed"
 };
 #undef QT_MOC_LITERAL
 
@@ -126,14 +126,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->on_saveButton_pressed(); break;
         case 5: _t->on_strokeButton_pressed(); break;
         case 6: _t->on_clearStrokeButton_pressed(); break;
-        case 7: _t->on_noneStyle_pressed(); break;
-        case 8: _t->on_impressionistStyle_pressed(); break;
-        case 9: _t->on_expressionistStyle_pressed(); break;
-        case 10: _t->on_coloristStyle_pressed(); break;
-        case 11: _t->on_pointillistStyle_pressed(); break;
-        case 12: _t->on_psychedelicStyle_pressed(); break;
-        case 13: _t->on_brushImageButton_pressed(); break;
-        case 14: _t->on_clearBrushImageButton_pressed(); break;
+        case 7: _t->on_brushImageButton_pressed(); break;
+        case 8: _t->on_clearBrushImageButton_pressed(); break;
+        case 9: _t->on_noneStyle_pressed(); break;
+        case 10: _t->on_impressionistStyle_pressed(); break;
+        case 11: _t->on_expressionistStyle_pressed(); break;
+        case 12: _t->on_coloristStyle_pressed(); break;
+        case 13: _t->on_pointillistStyle_pressed(); break;
+        case 14: _t->on_psychedelicStyle_pressed(); break;
         default: ;
         }
     }

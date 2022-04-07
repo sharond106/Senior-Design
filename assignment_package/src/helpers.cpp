@@ -118,7 +118,7 @@ QColor jitterColor(QColor color, JitterParams& jParams) {
     return newColor;
 }
 
-uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* brushImage,
+uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* canvas, QImage* gradientImage,
                          int maxStrokeLength, int minStrokeLength, float curvatureFilter, JitterParams& jParams) {
     QColor col = getColor(reference, x0, y0);
 
@@ -135,8 +135,8 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
     }
     for (int i = 0; i < maxStrokeLength; i++) {
         float theta = 0.f;
-        if (brushImage != nullptr) {
-            theta = gradient(prevX, prevY, brushImage);
+        if (gradientImage != nullptr) {
+            theta = gradient(prevX, prevY, gradientImage);
         } else {
             theta = gradient(prevX, prevY, reference);
         }

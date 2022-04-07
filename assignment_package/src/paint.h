@@ -35,6 +35,7 @@ public:
     float opacity = 1.0;
     float curvatureFilter = 1.;
     float blurFactor = 1.;
+    uPtr<QImage> gradientImage = nullptr;
     uPtr<QImage> brushImage = nullptr;
     float hueJitter = 0.;
     float satJitter = 0.;

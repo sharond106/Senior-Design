@@ -40,9 +40,13 @@ private slots:
 
     void on_saveButton_pressed();
 
+    // functions for the image for stroke gradient
     void on_strokeButton_pressed();
-
     void on_clearStrokeButton_pressed();
+
+    // functions for the brush image
+    void on_brushImageButton_pressed();
+    void on_clearBrushImageButton_pressed();
 
     void on_noneStyle_pressed();
     void on_impressionistStyle_pressed();
@@ -50,8 +54,6 @@ private slots:
     void on_coloristStyle_pressed();
     void on_pointillistStyle_pressed();
     void on_psychedelicStyle_pressed();
-    void on_brushImageButton_pressed();
-    void on_clearBrushImageButton_pressed();
 private:
     Ui::MainWindow *ui;
 
@@ -63,11 +65,12 @@ private:
     QGraphicsScene *scene;
     Paint paint;
     QString brushImagePath;
+    QString gradientImagePath;
 
     //Temp variables
     int counter = 50;
 
     void loadStyleParams();
     std::list<int> loadPaintParams();
-    void resizeBrushImage();
+    void resizeGradientImage();
 };

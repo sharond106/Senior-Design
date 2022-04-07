@@ -191,8 +191,8 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     uPtr<QImage> blurredRef = gaussianBlur(reference, brushSize * (.5 + this->blurFactor));
 
     // if using separate image for brush stroke direction
-    if (this->brushImage != nullptr) {
-        this->brushImage = gaussianBlur(this->brushImage.get(), brushSize);
+    if (this->gradientImage != nullptr) {
+        this->gradientImage = gaussianBlur(this->gradientImage.get(), brushSize);
     }
 
     std::vector<uPtr<Stroke>> zbuf;
@@ -204,7 +204,7 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
         QMutex mutex;
         for (int x = 0; x < reference->width(); x += grid) {
             for (int y = 0; y < reference->height(); y += grid) {
-                StrokeWorker* w = new StrokeWorker(x, y, grid, &mutex, blurredRef.get(), canvas, this->brushImage.get(),
+                StrokeWorker* w = new StrokeWorker(x, y, grid, &mutex, blurredRef.get(), canvas, this->gradientImage.get(),
                                                    this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, &zbuf, jParams);
                 QThreadPool::globalInstance()->start(w);
             }
@@ -217,7 +217,7 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
                 // TRY SIMILAR FIX FOR BRIGHT EDGES ON BLURRED IMAGE
                 glm::vec3 error = areaError(x, y, grid, blurredRef.get(), canvas);
                 if (error[2] > this->errorThreshold) {
-                    uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas, this->brushImage.get(),
+                    uPtr<Stroke> stroke = paintStroke(error[0], error[1], grid, blurredRef.get(), canvas, this->gradientImage.get(),
                             this->maxStrokeLength, this->minStrokeLength, this->curvatureFilter, jParams);
                     //std::cout << brushSize << " " << stroke.get()->randomKey << std::endl;
                     zbuf.push_back(std::move(stroke));

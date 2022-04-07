@@ -268,11 +268,18 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.blueJitter = 0.;
     }
 
+    if (gradientImage != nullptr && gradientImage->width() > 0) {
+        paint.gradientImage = mkU<QImage>(*this->gradientImage.get());
+    } else {
+        paint.gradientImage = nullptr;
+    }
+
     if (brushImage != nullptr && brushImage->width() > 0) {
         paint.brushImage = mkU<QImage>(*this->brushImage.get());
     } else {
         paint.brushImage = nullptr;
     }
+
 
 
     // Create list of brush sizes from largest to smallest'
@@ -315,8 +322,9 @@ void MainWindow::on_brushImageButton_pressed() {
                 "",
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
+    brushImage = mkU<QImage>();
+    brushImage->load((brushImagePath));
 
-    resizeBrushImage();
     // display it in the viewer
     QPixmap pixmap(QPixmap::fromImage(*brushImage));
     graphics_scene_for_brush.addPixmap(pixmap);
@@ -339,17 +347,17 @@ void MainWindow::on_strokeButton_pressed()
         std::cout << "Upload source image first" << std::endl;
         return;
     }
-    brushImagePath = QFileDialog::getOpenFileName(
+    gradientImagePath = QFileDialog::getOpenFileName(
                 this,
                 tr("Open File"),
                 "",
                 tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
                 );
 
-    resizeBrushImage();
+    resizeGradientImage();
 
     // display it in the viewer
-    QPixmap pixmap(QPixmap::fromImage(*brushImage));
+    QPixmap pixmap(QPixmap::fromImage(*gradientImage));
     graphics_scene_for_stroke.addPixmap(pixmap);
     graphics_scene_for_stroke.setSceneRect(pixmap.rect());
 
@@ -357,17 +365,17 @@ void MainWindow::on_strokeButton_pressed()
     ui->scene_display_2->fitInView(pixmap.rect(), Qt::KeepAspectRatio);
 }
 
-void MainWindow::resizeBrushImage() {
-    brushImage = mkU<QImage>();
-    brushImage->load((brushImagePath));
-    *brushImage = brushImage->scaled(ref->width(), ref->height(), Qt::KeepAspectRatioByExpanding);
-    *brushImage = brushImage->copy((brushImage->width() / 2.) - (ref->width() / 2.),
-                                   (brushImage->height() / 2.) - (ref->height() / 2.),
+void MainWindow::resizeGradientImage() {
+    gradientImage = mkU<QImage>();
+    gradientImage->load((gradientImagePath));
+    *gradientImage = gradientImage->scaled(ref->width(), ref->height(), Qt::KeepAspectRatioByExpanding);
+    *gradientImage = gradientImage->copy((gradientImage->width() / 2.) - (ref->width() / 2.),
+                                   (gradientImage->height() / 2.) - (ref->height() / 2.),
                                    ref->width(), ref->height());
 }
 
 void MainWindow::on_clearStrokeButton_pressed() {
-    brushImage = mkU<QImage>();
+    gradientImage = mkU<QImage>();
     graphics_scene_for_stroke.clear();
     ui->scene_display_2->setScene(&graphics_scene_for_stroke);
 }
@@ -379,14 +387,10 @@ void MainWindow::on_paintButton_pressed() {
     }
     imageObject = mkU<QImage>(ref->width(), ref->height(),  QImage::Format_RGB32);
 
-    if (brushImage != nullptr && brushImage->width() > 0) {
-        resizeBrushImage();
-    }
-
     std::list<int> ls = loadPaintParams();
 
     // SOMETIMES PIXEL COLORS ARE NEVER SET IF THERE'S ONLY 1 LAYER
-    imageObject->fill(QColor(0, 255, 0));
+    imageObject->fill(QColor(255, 255, 255));
 
     // this still isn't showing up in layers with the timer
     for (int r: ls) {
