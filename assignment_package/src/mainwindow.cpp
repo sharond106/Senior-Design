@@ -294,7 +294,7 @@ void MainWindow::on_openButton_pressed()
                 this,
                 tr("Open File"),
                 "",
-                tr("JPEG (*.jpg *.jpeg);;PNG (*.png)" )
+                tr("JPEG (*.jpg *.jpeg *.png);; PNG (*.png)" )
                 );
 
     ref = mkU<QImage>();
