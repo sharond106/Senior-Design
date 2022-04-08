@@ -248,6 +248,7 @@ public:
         brushShape = new QComboBox(parametersGroup);
         brushShape->addItem(QString());
         brushShape->addItem(QString());
+        brushShape->addItem(QString());
         brushShape->setObjectName(QString::fromUtf8("brushShape"));
         brushShape->setGeometry(QRect(140, 30, 80, 26));
         blurFactor = new QSlider(parametersGroup);
@@ -312,7 +313,7 @@ public:
         paintButton->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1384, 22));
+        menuBar->setGeometry(QRect(0, 0, 1384, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -352,6 +353,7 @@ public:
         label_3->setText(QCoreApplication::translate("MainWindow", "Brush shape", nullptr));
         brushShape->setItemText(0, QCoreApplication::translate("MainWindow", "Circle", nullptr));
         brushShape->setItemText(1, QCoreApplication::translate("MainWindow", "Square", nullptr));
+        brushShape->setItemText(2, QCoreApplication::translate("MainWindow", "Custom", nullptr));
 
         styleGroup->setTitle(QCoreApplication::translate("MainWindow", "Or select a preset style", nullptr));
         psychedelicStyle->setText(QCoreApplication::translate("MainWindow", "Psychedelic", nullptr));

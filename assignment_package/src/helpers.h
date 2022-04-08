@@ -12,6 +12,7 @@
 #include "glm/trigonometric.hpp"
 #include <QThreadPool>
 #include <iostream>
+#include <cmath>
 
 struct JitterParams {
     float hueJitter, satJitter, valueJitter, redJitter, greenJitter, blueJitter;
@@ -48,5 +49,7 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
                          int maxStrokeLength, int minStrokeLength, float curvatureFilter, JitterParams& jParams);
 
 glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
+
+uPtr<QImage> resizeBrushImage(QImage* brushRef, float radius);
 
 #endif // HELPERS_H

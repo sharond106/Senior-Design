@@ -576,6 +576,11 @@
        <string>Square</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>Custom</string>
+      </property>
+     </item>
     </widget>
     <widget class="QSlider" name="blurFactor">
      <property name="geometry">
@@ -799,7 +804,7 @@
      <x>0</x>
      <y>0</y>
      <width>1384</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

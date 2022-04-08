@@ -19,7 +19,7 @@
 #include <QImage>
 
 
-enum BrushShape { CIRCLE, SQUARE };
+enum BrushShape { CIRCLE, SQUARE, CUSTOM };
 
 class Paint
 {
@@ -62,6 +62,8 @@ public:
     bool checkShape(int x, int y, int centerX, int centerY, float r);
 
     void applyPaint(Stroke* stroke, QImage* canvas);
+
+    void applyPaintCustom(Stroke* stroke, QImage* canvas, QImage* brushImage);
 
     void paintLayer(QImage* reference, QImage* canvas, int brushSize);
 

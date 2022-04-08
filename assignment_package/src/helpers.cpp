@@ -133,7 +133,9 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
     if (maxStrokeLength < 0) {
         maxStrokeLength = 4 * radius;
     }
-    for (int i = 0; i < maxStrokeLength; i++) {
+    //Hacky adjustment here, need to calculate angle at each point
+    //So do that calculation then break from the loop
+    for (int i = 0; i < maxStrokeLength + 1; i++) {
         float theta = 0.f;
         if (gradientImage != nullptr) {
             theta = gradient(prevX, prevY, gradientImage);
@@ -158,6 +160,13 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
 
         int x = prevX + round(deltaX);
         int y = prevY + round(deltaY);
+
+        //Compute unit vector and plug into atan2. yields angle in radians
+        float length = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
+        stroke->addAngle(std::atan2(deltaY / length, deltaX / length));
+        if (i < maxStrokeLength) {
+            return stroke;
+        }
         if (outOfBounds(x, y, reference)) {
             return stroke;
         }
@@ -192,4 +201,24 @@ glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas) {
         }
     }
     return glm::vec3(maxX, maxY, error);
+}
+
+uPtr<QImage> resizeBrushImage(QImage* brushRef, float radius) {
+    float length = std::sqrt(std::pow(brushRef->width(), 2) + std::pow(brushRef->height(), 2));
+    float scale = radius / length * 8;
+    uPtr<QImage>brushImage = mkU<QImage>(*brushRef);
+    *brushImage = brushImage->scaled(brushRef->width() * scale, brushRef->height() * scale, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+
+    //We grey scale the image and flip
+    for (int i = 0; i < brushImage->width(); i++) {
+        for (int j = 0; j < brushImage->height(); j++) {
+             QColor color = brushImage->pixelColor(i, j);
+             float luminance = 0.30 * color.red() + 0.59 * color.green() + 0.11 * color.blue();
+             if (luminance < 250) {
+                 int z = 1;
+             }
+             brushImage->setPixelColor(i, j, QColor(255 - luminance, 255 - luminance, 255 - luminance));
+        }
+    }
+    return brushImage;
 }
