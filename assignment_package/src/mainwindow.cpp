@@ -393,9 +393,10 @@ void MainWindow::on_paintButton_pressed() {
     imageObject->fill(QColor(255, 255, 255));
 
     // this still isn't showing up in layers with the timer
-    for (int r: ls) {
-       paint.paintLayer(ref.get(), imageObject.get(), r);
-    }
+//    for (int r: ls) {
+//       paint.paintLayer(ref.get(), imageObject.get(), r);
+//    }
+    paint.paint(ref.get(), imageObject.get(), ls);
 }
 
 void MainWindow::on_saveButton_pressed()

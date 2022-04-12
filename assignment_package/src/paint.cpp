@@ -1,7 +1,5 @@
 #include "paint.h"
 
-
-
 bool TESTING = false;
 
 struct byKey {
@@ -167,6 +165,8 @@ bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
         return true;
     case CIRCLE:
         return inCircle(x, y, centerX, centerY, r);
+    case CUSTOM:
+        return inCircle(x, y, centerX, centerY, r);
     default:
         return true;
     }
@@ -174,12 +174,40 @@ bool Paint::checkShape(int x, int y, int centerX, int centerY, float r) {
 
 void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
     for (std::pair<int, int> point : stroke->points) {
-
         // MAYBE NOT +1?
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
                 if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
                     canvas->setPixelColor(x, y, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
+                }
+            }
+        }
+    }
+}
+
+void Paint::applyPaintCustom(Stroke* stroke, QImage* canvas, QImage* brushImage) {
+    for (int i = 0; i < stroke->points.size(); i++) {
+        int x = stroke->points[i].first;
+        int y = stroke->points[i].second;
+        float angle = stroke->angles[i];
+        int width = brushImage->width();
+        int height = brushImage->height();
+        //Going through brush points
+        for (int bX = 0; bX < width; bX++) {
+            for (int bY = 0; bY < height; bY++) {
+                float color = brushImage->pixelColor(bX, bY).red();
+                if (color < 255 / 2) {
+                    continue;
+                }
+                //Centering brush
+                float bXcenter = static_cast<float>(bX) - static_cast<float>(width) / 2.f;
+                float bYcenter = static_cast<float>(bY) - static_cast<float>(height) / 2.f;
+                int rotateX = bXcenter * cos(angle) - bYcenter * sin(angle);
+                int rotateY = bXcenter * sin(angle) + bYcenter * cos(angle);
+                int finX = rotateX + x;
+                int finY = rotateY + y;
+                if (!outOfBounds(finX, finY, canvas)) {
+                    canvas->setPixelColor(finX, finY, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
                 }
             }
         }
@@ -229,12 +257,22 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     //Randomly sort strokes
     std::sort(zbuf.begin(), zbuf.end(), byKey());
 
-    for (int i = 0; i < (int)zbuf.size(); i++) {
-        applyPaint(zbuf[i].get(), canvas);
+    if (this->brush == CUSTOM && this->brushImage != nullptr) {
+        uPtr<QImage> brushImageScaled = resizeBrushImage(brushImage.get(), static_cast<float>(brushSize));
+        for (int i = 0; i < (int)zbuf.size(); i++) {
+            applyPaintCustom(zbuf[i].get(), canvas, brushImageScaled.get());
+        }
+    } else {
+        for (int i = 0; i < (int)zbuf.size(); i++) {
+            applyPaint(zbuf[i].get(), canvas);
+        }
     }
 }
 
 void Paint::paint(QImage* reference, QImage* canvas, std::list<int> brushSizes) {
+//    std::cout <<"hi"<<std::endl;
+//    canvas = resizeBrushImage(brushImage.get(), std::sqrt(std::pow(brushImage.get()->width(), 2) + std::pow(brushImage.get()->height(), 2))).get();
+//    std::cout <<"bi"<<std::endl;
     for (int brushSize : brushSizes) {
         paintLayer(reference, canvas, brushSize);
     }
