@@ -50,6 +50,6 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
 
 glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas);
 
-uPtr<QImage> resizeBrushImage(QImage* brushRef, float radius);
+uPtr<QImage> resizeBrushImage(QImage* brushRef, float radius, float brushImageSize);
 
 #endif // HELPERS_H

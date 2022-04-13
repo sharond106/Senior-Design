@@ -80,6 +80,8 @@ public:
     QPushButton *brushImageButton;
     QGraphicsView *scene_display_3;
     QPushButton *clearBrushImageButton;
+    QLabel *label_4;
+    QSpinBox *brushImageSize;
     QMenuBar *menuBar;
     QMenu *menuFile;
 
@@ -87,23 +89,23 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1384, 729);
+        MainWindow->resize(1384, 748);
         actionQuit = new QAction(MainWindow);
         actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         scene_display = new QGraphicsView(centralWidget);
         scene_display->setObjectName(QString::fromUtf8("scene_display"));
-        scene_display->setGeometry(QRect(60, 40, 771, 621));
+        scene_display->setGeometry(QRect(60, 40, 771, 651));
         openButton = new QPushButton(centralWidget);
         openButton->setObjectName(QString::fromUtf8("openButton"));
         openButton->setGeometry(QRect(860, 40, 141, 31));
         saveButton = new QPushButton(centralWidget);
         saveButton->setObjectName(QString::fromUtf8("saveButton"));
-        saveButton->setGeometry(QRect(860, 630, 131, 31));
+        saveButton->setGeometry(QRect(860, 660, 131, 31));
         paintButton = new QPushButton(centralWidget);
         paintButton->setObjectName(QString::fromUtf8("paintButton"));
-        paintButton->setGeometry(QRect(860, 590, 131, 31));
+        paintButton->setGeometry(QRect(860, 610, 131, 31));
         parametersGroup = new QGroupBox(centralWidget);
         parametersGroup->setObjectName(QString::fromUtf8("parametersGroup"));
         parametersGroup->setGeometry(QRect(860, 90, 271, 451));
@@ -284,7 +286,7 @@ public:
         coloristStyle->setGeometry(QRect(10, 120, 110, 24));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(1140, 310, 231, 361));
+        groupBox->setGeometry(QRect(1140, 310, 231, 401));
         strokeButton = new QPushButton(groupBox);
         strokeButton->setObjectName(QString::fromUtf8("strokeButton"));
         strokeButton->setGeometry(QRect(10, 20, 141, 31));
@@ -303,6 +305,16 @@ public:
         clearBrushImageButton = new QPushButton(groupBox);
         clearBrushImageButton->setObjectName(QString::fromUtf8("clearBrushImageButton"));
         clearBrushImageButton->setGeometry(QRect(130, 320, 81, 31));
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(10, 360, 121, 21));
+        brushImageSize = new QSpinBox(groupBox);
+        brushImageSize->setObjectName(QString::fromUtf8("brushImageSize"));
+        brushImageSize->setGeometry(QRect(110, 360, 61, 26));
+        brushImageSize->setMinimum(0);
+        brushImageSize->setMaximum(80);
+        brushImageSize->setSingleStep(1);
+        brushImageSize->setValue(0);
         MainWindow->setCentralWidget(centralWidget);
         groupBox->raise();
         parametersGroup->raise();
@@ -313,7 +325,7 @@ public:
         paintButton->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1384, 21));
+        menuBar->setGeometry(QRect(0, 0, 1384, 22));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -367,6 +379,7 @@ public:
         clearStrokeButton->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
         brushImageButton->setText(QCoreApplication::translate("MainWindow", "Upload Brush Image", nullptr));
         clearBrushImageButton->setText(QCoreApplication::translate("MainWindow", "Clear", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "Brush image size", nullptr));
         menuFile->setTitle(QCoreApplication::translate("MainWindow", "File", nullptr));
     } // retranslateUi
 

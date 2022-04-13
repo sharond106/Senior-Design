@@ -276,6 +276,7 @@ std::list<int> MainWindow::loadPaintParams() {
 
     if (brushImage != nullptr && brushImage->width() > 0) {
         paint.brushImage = mkU<QImage>(*this->brushImage.get());
+        paint.brushImageSize = ui->brushImageSize->value();
     } else {
         paint.brushImage = nullptr;
     }
