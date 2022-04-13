@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //    imageObject = paint.gaussianBlur(imageObject.get());
 
     connect(&timer, SIGNAL(timeout()), this, SLOT(tick()));
-    timer.start(300);
+//    timer.start(300);
 }
 
 void MainWindow::DisplayQImage(QImage &i)
@@ -44,8 +44,8 @@ void MainWindow::on_actionQuit_triggered()
 }
 
 void MainWindow::tick() {
-    graphics_scene.clear();
-    graphics_scene.update();
+//    graphics_scene.clear();
+//    graphics_scene.update();
 
     if (imageObject != nullptr) {
         DisplayQImage(*imageObject);
@@ -309,6 +309,9 @@ void MainWindow::on_openButton_pressed()
     ref->load(imagePath);
     imageObject = mkU<QImage>();
     imageObject->load(imagePath);
+
+    graphics_scene.clear();
+    DisplayQImage(*imageObject);
 }
 
 void MainWindow::on_brushImageButton_pressed() {
@@ -396,8 +399,14 @@ void MainWindow::on_paintButton_pressed() {
     // this still isn't showing up in layers with the timer
 //    for (int r: ls) {
 //       paint.paintLayer(ref.get(), imageObject.get(), r);
+//       graphics_scene.clear();
+//       graphics_scene.update();
+//       DisplayQImage(*imageObject);
+//       graphics_scene.update();
+//       break;
 //    }
     paint.paint(ref.get(), imageObject.get(), ls);
+    DisplayQImage(*imageObject);
 }
 
 void MainWindow::on_saveButton_pressed()

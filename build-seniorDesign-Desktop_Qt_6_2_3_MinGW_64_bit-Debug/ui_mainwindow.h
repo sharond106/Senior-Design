@@ -314,7 +314,7 @@ public:
         brushImageSize->setMinimum(0);
         brushImageSize->setMaximum(80);
         brushImageSize->setSingleStep(1);
-        brushImageSize->setValue(0);
+        brushImageSize->setValue(40);
         MainWindow->setCentralWidget(centralWidget);
         groupBox->raise();
         parametersGroup->raise();
