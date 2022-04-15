@@ -205,7 +205,7 @@ glm::vec3 areaError(int x, int y, int grid, QImage* reference, QImage* canvas) {
 
 uPtr<QImage> resizeBrushImage(QImage* brushRef, float radius) {
     float length = std::sqrt(std::pow(brushRef->width(), 2) + std::pow(brushRef->height(), 2));
-    float scale = radius / length * 8;
+    float scale = radius / length * 16;
     uPtr<QImage>brushImage = mkU<QImage>(*brushRef);
     *brushImage = brushImage->scaled(brushRef->width() * scale, brushRef->height() * scale, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
