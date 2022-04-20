@@ -355,7 +355,7 @@ void MainWindow::on_clearBrushImageButton_pressed() {
 
 void MainWindow::on_strokeButton_pressed()
 {
-    graphics_scene.clear();
+    graphics_scene_for_stroke.clear();
     if (ref == nullptr || ref->width() <= 0) {
         std::cout << "Upload source image first" << std::endl;
         return;
