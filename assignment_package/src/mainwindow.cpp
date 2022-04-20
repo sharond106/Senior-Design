@@ -214,11 +214,11 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.maxStrokeLength = -1.;
     }
 
-//    if (ui->opacityCheck->isChecked()) {
-//        paint.opacity = ui->opacity->value() / 10.;
-//    } else {
-//        paint.opacity = 1.0;
-//    }
+    if (ui->opacityCheck->isChecked()) {
+        paint.opacity = ui->opacity->value() / 10.;
+    } else {
+        paint.opacity = 1.0;
+    }
 
     if (ui->curvatureFilterCheck->isChecked()) {
         paint.curvatureFilter = ui->curvatureFilter->value() / 10.;

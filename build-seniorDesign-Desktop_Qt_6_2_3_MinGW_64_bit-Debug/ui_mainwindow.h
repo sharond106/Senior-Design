@@ -66,6 +66,8 @@ public:
     QLabel *label_3;
     QComboBox *brushShape;
     QSlider *blurFactor;
+    QSlider *opacity;
+    QCheckBox *opacityCheck;
     QGroupBox *styleGroup;
     QRadioButton *psychedelicStyle;
     QRadioButton *expressionistStyle;
@@ -108,7 +110,7 @@ public:
         paintButton->setGeometry(QRect(860, 610, 131, 31));
         parametersGroup = new QGroupBox(centralWidget);
         parametersGroup->setObjectName(QString::fromUtf8("parametersGroup"));
-        parametersGroup->setGeometry(QRect(860, 90, 271, 451));
+        parametersGroup->setGeometry(QRect(860, 90, 271, 481));
         minStrokeLength = new QSpinBox(parametersGroup);
         minStrokeLength->setObjectName(QString::fromUtf8("minStrokeLength"));
         minStrokeLength->setGeometry(QRect(150, 210, 42, 26));
@@ -262,6 +264,18 @@ public:
         blurFactor->setSliderPosition(5);
         blurFactor->setOrientation(Qt::Horizontal);
         blurFactor->setTickInterval(1);
+        opacity = new QSlider(parametersGroup);
+        opacity->setObjectName(QString::fromUtf8("opacity"));
+        opacity->setGeometry(QRect(140, 450, 111, 22));
+        opacity->setMaximum(10);
+        opacity->setSingleStep(1);
+        opacity->setValue(10);
+        opacity->setSliderPosition(10);
+        opacity->setOrientation(Qt::Horizontal);
+        opacity->setTickInterval(1);
+        opacityCheck = new QCheckBox(parametersGroup);
+        opacityCheck->setObjectName(QString::fromUtf8("opacityCheck"));
+        opacityCheck->setGeometry(QRect(10, 450, 131, 24));
         styleGroup = new QGroupBox(centralWidget);
         styleGroup->setObjectName(QString::fromUtf8("styleGroup"));
         styleGroup->setGeometry(QRect(1140, 90, 231, 211));
@@ -325,7 +339,7 @@ public:
         paintButton->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1384, 22));
+        menuBar->setGeometry(QRect(0, 0, 1384, 26));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
         MainWindow->setMenuBar(menuBar);
@@ -367,6 +381,7 @@ public:
         brushShape->setItemText(1, QCoreApplication::translate("MainWindow", "Square", nullptr));
         brushShape->setItemText(2, QCoreApplication::translate("MainWindow", "Custom", nullptr));
 
+        opacityCheck->setText(QCoreApplication::translate("MainWindow", "Opacity", nullptr));
         styleGroup->setTitle(QCoreApplication::translate("MainWindow", "Or select a preset style", nullptr));
         psychedelicStyle->setText(QCoreApplication::translate("MainWindow", "Psychedelic", nullptr));
         expressionistStyle->setText(QCoreApplication::translate("MainWindow", "Expressionist", nullptr));

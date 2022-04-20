@@ -164,7 +164,7 @@ uPtr<Stroke> paintStroke(int x0, int y0, int radius, QImage* reference, QImage* 
         //Compute unit vector and plug into atan2. yields angle in radians
         float length = std::sqrt(std::pow(x, 2) + std::pow(y, 2));
         stroke->addAngle(std::atan2(deltaY / length, deltaX / length));
-        if (i < maxStrokeLength) {
+        if (i > maxStrokeLength) {
             return stroke;
         }
         if (outOfBounds(x, y, reference)) {
