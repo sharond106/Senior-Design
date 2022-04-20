@@ -214,11 +214,11 @@ std::list<int> MainWindow::loadPaintParams() {
         paint.maxStrokeLength = -1.;
     }
 
-//    if (ui->opacityCheck->isChecked()) {
-//        paint.opacity = ui->opacity->value() / 10.;
-//    } else {
-//        paint.opacity = 1.0;
-//    }
+    if (ui->opacityCheck->isChecked()) {
+        paint.opacity = ui->opacity->value() / 10.;
+    } else {
+        paint.opacity = 1.0;
+    }
 
     if (ui->curvatureFilterCheck->isChecked()) {
         paint.curvatureFilter = ui->curvatureFilter->value() / 10.;
@@ -315,7 +315,7 @@ void MainWindow::on_openButton_pressed()
 }
 
 void MainWindow::on_brushImageButton_pressed() {
-    graphics_scene.clear();
+    graphics_scene_for_brush.clear();
     if (ref == nullptr || ref->width() <= 0) {
         std::cout << "Upload source image first" << std::endl;
         return;
