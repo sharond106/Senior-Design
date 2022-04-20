@@ -315,7 +315,7 @@ void MainWindow::on_openButton_pressed()
 }
 
 void MainWindow::on_brushImageButton_pressed() {
-    graphics_scene.clear();
+    graphics_scene_for_brush.clear();
     if (ref == nullptr || ref->width() <= 0) {
         std::cout << "Upload source image first" << std::endl;
         return;

@@ -178,7 +178,14 @@ void Paint::applyPaint(Stroke* stroke, QImage* canvas) {
         for (int x = point.first - stroke->radius + 1; x < point.first + stroke->radius; x += 1) {
             for (int y = point.second - stroke->radius + 1; y < point.second + stroke->radius; y += 1) {
                 if (!outOfBounds(x, y, canvas) && checkShape(x, y, point.first, point.second, stroke->radius)) {
-                    canvas->setPixelColor(x, y, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
+                    QColor c = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue());
+//                    if (this->paintedFirstLayer) {
+//                        QColor old = canvas->pixelColor(x, y);
+//                        c.setRed(std::min(255., (c.red() + old.red()) / 2.));
+//                        c.setGreen(std::min(255., (c.green() + old.green()) / 2.));
+//                        c.setBlue(std::min(255., (c.blue() + old.blue()) / 2.));
+//                    }
+                    canvas->setPixelColor(x, y, c);
                 }
             }
         }
@@ -207,7 +214,14 @@ void Paint::applyPaintCustom(Stroke* stroke, QImage* canvas, QImage* brushImage)
                 int finX = rotateX + x;
                 int finY = rotateY + y;
                 if (!outOfBounds(finX, finY, canvas)) {
-                    canvas->setPixelColor(finX, finY, QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue()));
+                    QColor c = QColor(stroke->color.red(), stroke->color.green(), stroke->color.blue());
+//                    if (this->paintedFirstLayer) {
+//                        QColor old = canvas->pixelColor(x, y);
+//                        c.setRed(std::min(255., (c.red() + old.red()) / 2.));
+//                        c.setGreen(std::min(255., (c.green() + old.green()) / 2.));
+//                        c.setBlue(std::min(255., (c.blue() + old.blue()) / 2.));
+//                    }
+                    canvas->setPixelColor(finX, finY, c);
                 }
             }
         }
@@ -273,8 +287,10 @@ void Paint::paint(QImage* reference, QImage* canvas, std::list<int> brushSizes) 
 //    std::cout <<"hi"<<std::endl;
 //    canvas = resizeBrushImage(brushImage.get(), std::sqrt(std::pow(brushImage.get()->width(), 2) + std::pow(brushImage.get()->height(), 2))).get();
 //    std::cout <<"bi"<<std::endl;
+    this->paintedFirstLayer = false;
     for (int brushSize : brushSizes) {
         paintLayer(reference, canvas, brushSize);
+        this->paintedFirstLayer = true;
     }
 }
 

@@ -44,6 +44,7 @@ public:
     float greenJitter = 0.;
     float blueJitter = 0.;
     float brushImageSize = 0.;
+    bool paintedFirstLayer = false;
 
     Paint();
 
