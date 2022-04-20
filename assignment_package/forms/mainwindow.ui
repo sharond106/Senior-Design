@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1384</width>
-    <height>729</height>
+    <height>748</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>60</x>
       <y>40</y>
       <width>771</width>
-      <height>621</height>
+      <height>651</height>
      </rect>
     </property>
    </widget>
@@ -41,7 +41,7 @@
     <property name="geometry">
      <rect>
       <x>860</x>
-      <y>630</y>
+      <y>660</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -54,7 +54,7 @@
     <property name="geometry">
      <rect>
       <x>860</x>
-      <y>590</y>
+      <y>610</y>
       <width>131</width>
       <height>31</height>
      </rect>
@@ -711,7 +711,7 @@
       <x>1140</x>
       <y>310</y>
       <width>231</width>
-      <height>361</height>
+      <height>401</height>
      </rect>
     </property>
     <property name="title">
@@ -789,6 +789,41 @@
       <string>Clear</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>360</y>
+       <width>121</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Brush image size</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="brushImageSize">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>360</y>
+       <width>61</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>0</number>
+     </property>
+     <property name="maximum">
+      <number>80</number>
+     </property>
+     <property name="singleStep">
+      <number>1</number>
+     </property>
+     <property name="value">
+      <number>40</number>
+     </property>
+    </widget>
    </widget>
    <zorder>groupBox</zorder>
    <zorder>parametersGroup</zorder>
@@ -804,7 +839,7 @@
      <x>0</x>
      <y>0</y>
      <width>1384</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

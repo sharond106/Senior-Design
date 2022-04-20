@@ -43,6 +43,7 @@ public:
     float redJitter = 0.;
     float greenJitter = 0.;
     float blueJitter = 0.;
+    float brushImageSize = 0.;
 
     Paint();
 

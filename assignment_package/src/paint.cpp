@@ -258,7 +258,7 @@ void Paint::paintLayer(QImage* reference, QImage* canvas, int brushSize) {
     std::sort(zbuf.begin(), zbuf.end(), byKey());
 
     if (this->brush == CUSTOM && this->brushImage != nullptr) {
-        uPtr<QImage> brushImageScaled = resizeBrushImage(brushImage.get(), static_cast<float>(brushSize));
+        uPtr<QImage> brushImageScaled = resizeBrushImage(brushImage.get(), static_cast<float>(brushSize), this->brushImageSize);
         for (int i = 0; i < (int)zbuf.size(); i++) {
             applyPaintCustom(zbuf[i].get(), canvas, brushImageScaled.get());
         }
