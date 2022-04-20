@@ -74,6 +74,7 @@ void MainWindow::on_noneStyle_pressed() {
     ui->redCheck->setChecked(false);
     ui->greenCheck->setChecked(false);
     ui->blueCheck->setChecked(false);
+    ui->opacityCheck->setChecked(false);
 }
 
 void MainWindow::on_impressionistStyle_pressed() {
@@ -95,6 +96,7 @@ void MainWindow::on_impressionistStyle_pressed() {
     ui->redCheck->setChecked(false);
     ui->greenCheck->setChecked(false);
     ui->blueCheck->setChecked(false);
+    ui->opacityCheck->setChecked(false);
 }
 
 void MainWindow::on_expressionistStyle_pressed() {
@@ -118,6 +120,8 @@ void MainWindow::on_expressionistStyle_pressed() {
     ui->redCheck->setChecked(false);
     ui->greenCheck->setChecked(false);
     ui->blueCheck->setChecked(false);
+    ui->opacityCheck->setChecked(true);
+    ui->opacity->setValue(7);
 }
 
 void MainWindow::on_coloristStyle_pressed() {
@@ -142,6 +146,8 @@ void MainWindow::on_coloristStyle_pressed() {
     ui->green->setValue(3);
     ui->blueCheck->setChecked(true);
     ui->blue->setValue(3);
+    ui->opacityCheck->setChecked(true);
+    ui->opacity->setValue(5);
 }
 
 void MainWindow::on_pointillistStyle_pressed() {
@@ -167,6 +173,7 @@ void MainWindow::on_pointillistStyle_pressed() {
     ui->redCheck->setChecked(false);
     ui->greenCheck->setChecked(false);
     ui->blueCheck->setChecked(false);
+    ui->opacityCheck->setChecked(false);
 }
 
 void MainWindow::on_psychedelicStyle_pressed() {
@@ -191,6 +198,8 @@ void MainWindow::on_psychedelicStyle_pressed() {
     ui->redCheck->setChecked(false);
     ui->greenCheck->setChecked(false);
     ui->blueCheck->setChecked(false);
+    ui->opacityCheck->setChecked(true);
+    ui->opacity->setValue(7);
 }
 
 std::list<int> MainWindow::loadPaintParams() {
